@@ -1,195 +1,250 @@
-/*
- * Corrected mobile-specific styles for SmartCardLink Landing Page.
- * This stylesheet ensures proper layout and functionality on smaller screens
- * without interfering with the desktop design.
- */
-
-/* ==================== */
-/* === Mobile-Specific Styles (max-width: 768px) === */
-/* ==================== */
-
 @media (max-width: 768px) {
-    /* Main body adjustments */
+    :root {
+        --header-height: 74px;
+    }
+
     body {
-        padding-top: var(--header-height, 60px);
-        overflow-x: hidden;
+        padding-top: var(--header-height);
     }
 
-    body.no-scroll {
-        overflow: hidden;
-    }
-
-    /* Header adjustments for a mobile menu */
     .main-header {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: auto;
-        padding: 1rem;
-        text-align: center;
-    }
-
-    .main-header .logo-link {
-        margin: 0 auto;
-    }
-
-    .main-header .header-nav {
-        display: none;
+        padding: 0 1rem;
     }
 
     .logo {
-        height: 2.5rem;
+        height: 38px;
     }
 
-    /*
-     * Hero Section layout correction for centering.
-     * The key is to use flexbox on the hero-content-wrapper.
-     */
-    .hero-section {
-        height: auto;
-        min-height: calc(100vh - var(--header-height, 60px));
-        padding: 2rem 1rem;
-        display: flex; /* Add flexbox to center content */
-        align-items: center; /* Vertically centers the content */
-        justify-content: center; /* Horizontally centers the content */
+    .hamburger-menu {
+        display: inline-flex;
     }
 
-    .hero-content-wrapper {
-        flex-direction: column;
-        justify-content: center; /* Centers items vertically within the column */
-        align-items: center; /* Centers items horizontally within the column */
-        gap: 1rem;
-        text-align: center;
-        width: 100%; /* Ensure it takes full width for proper centering */
-    }
-
-    .hero-right {
-        order: -1;
-        width: 100%;
+    .header-nav {
+        position: fixed;
+        top: var(--header-height);
+        left: 1rem;
+        right: 1rem;
         display: flex;
-        justify-content: center; /* Center the card horizontally */
-        padding-top: 2rem;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.45rem;
+        padding: 1rem;
+        border-radius: 22px;
+        background: rgba(8, 10, 15, 0.96);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(18px);
+        transform: translateY(-10px);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+    }
+
+    .header-nav.active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .nav-btn {
+        width: 100%;
+        text-align: left;
+        padding: 0.95rem 1rem;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.03);
+    }
+
+    .hero-section {
+        min-height: auto;
+        padding: 1.4rem 0 5.5rem;
+    }
+
+    .hero-grid {
+        width: min(100%, calc(100% - 1.25rem));
+        gap: 1.6rem;
     }
 
     .hero-left {
+        order: 2;
+    }
+
+    .hero-right {
         order: 1;
-        max-width: 100%;
-        padding: 1rem 0;
+        min-height: auto;
     }
 
-    /* VCard animation fixes - use a single, controlled container */
-    .vcard-animation-container {
-        position: relative;
-        width: 90vw;
-        height: calc(90vw * 250 / 400);
-        max-width: 320px;
-        max-height: 200px;
+    .eyebrow-badge {
+        font-size: 0.8rem;
+        padding: 0.65rem 0.85rem;
+        gap: 0.55rem;
     }
 
-    .vcard-wrapper {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        transition: opacity 0.8s ease;
-    }
-
-    .vcard-wrapper.active {
-        opacity: 1;
-        z-index: 2;
-    }
-
-    .vcard-wrapper:not(.active) {
-        opacity: 0;
-        z-index: 1;
-    }
-
-    /* Font and text size adjustments for clarity on mobile */
     .hero-welcome {
-        font-size: 1.2rem;
-    }
-    .hero-connect {
-        font-size: 2.5rem;
-        -webkit-text-stroke: 1.5px var(--secondary-color);
-        text-stroke: 1.5px var(--secondary-color);
-    }
-    .hero-tagline-1, .hero-tagline-2 {
-        font-size: 0.9rem;
+        font-size: 1.05rem;
+        min-height: 1.5rem;
     }
 
-    /* General mobile layout adjustments */
-    .section-title {
-        font-size: 1.8rem;
+    .hero-title {
+        font-size: clamp(2.25rem, 10vw, 3.6rem);
+        max-width: 100%;
     }
-    .info-tag-container.horizontal-videos {
+
+    .hero-subtext {
+        font-size: 0.98rem;
+        line-height: 1.75;
+    }
+
+    .hero-cta-group {
         flex-direction: column;
-        gap: 1.5rem;
+        align-items: stretch;
     }
-    .feature-grid, .benefit-grid, .contact-grid {
+
+    .cta-button {
+        width: 100%;
+    }
+
+    .hero-trust-row {
+        gap: 0.65rem;
+    }
+
+    .trust-pill {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .hero-mini-stats {
+        margin-top: 1.3rem;
+    }
+
+    .hero-card-stage {
+        width: 100%;
+        aspect-ratio: auto;
+        min-height: 310px;
+    }
+
+    .vcard-animation-container {
+        width: min(100%, 340px);
+    }
+
+    .floating-chip {
+        font-size: 0.78rem;
+        padding: 0.65rem 0.8rem;
+    }
+
+    .chip-1 { top: 3%; left: -2%; }
+    .chip-2 { top: 20%; right: -2%; }
+    .chip-3 { bottom: 12%; left: 0; }
+    .chip-4 { bottom: 1%; right: -1%; }
+
+    .content-section {
+        padding: 4.5rem 0;
+    }
+
+    .content-wrapper {
+        width: min(100%, calc(100% - 1.25rem));
+    }
+
+    .section-title {
+        font-size: clamp(1.8rem, 9vw, 2.6rem);
+        max-width: 100%;
+    }
+
+    .section-intro {
+        font-size: 0.98rem;
+    }
+
+    .glass-panel,
+    .feature-card,
+    .process-card,
+    .use-case-card,
+    .contact-card,
+    .media-card,
+    .pricing-card,
+    .faq-item,
+    .final-cta-panel {
+        border-radius: 20px;
+    }
+
+    .pricing-card,
+    .final-cta-panel {
+        padding: 1.25rem;
+    }
+
+    .featured-ribbon {
+        position: static;
+        margin-bottom: 0.9rem;
+    }
+
+    .comparison-wrap {
+        padding: 1rem;
+    }
+
+    .comparison-table {
+        min-width: 560px;
+    }
+
+    .scroll-down-arrow {
+        bottom: 84px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .scroll-to-top-arrow {
+        right: 16px;
+        bottom: 86px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .mobile-sticky-cta {
+        display: inline-flex;
+    }
+
+    .main-footer {
+        padding-bottom: 6rem;
+    }
+
+    .footer-inner {
+        width: min(100%, calc(100% - 1.25rem));
         gap: 1rem;
     }
+}
 
-    /* Pricing section fixes */
-    .pricing-grid {
-        flex-direction: column;
-        align-items: center;
-        gap: 2rem;
-    }
-
-    /* Reduce the size of pricing cards to prevent overlap on mobile */
-    .pricing-card {
-        width: 95%;
-        max-width: 300px;
+@media (max-width: 480px) {
+    .hero-grid,
+    .content-wrapper,
+    .footer-inner {
+        width: min(100%, calc(100% - 1rem));
     }
 
-    /* Tabs now glow and pop on scroll and press */
-    .animated-on-scroll.scroll-visible {
-        animation: glow-popup 0.6s ease-in-out forwards;
-    }
-    .animated-on-scroll:active {
-        animation: glow-popup 0.3s ease-in-out forwards;
-    }
-    @keyframes glow-popup {
-        0% {
-            transform: scale(1) translateY(0);
-            box-shadow: none;
-        }
-        50% {
-            transform: scale(1.05) translateY(-5px);
-            box-shadow: var(--box-shadow-glow);
-        }
-        100% {
-            transform: scale(1) translateY(0);
-            box-shadow: var(--box-shadow);
-        }
+    .main-header {
+        padding: 0 0.75rem;
     }
 
-
-    /* Scroll-down arrow is now fixed at the bottom of the screen */
-    .scroll-down-arrow {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        animation: bounce 2s infinite;
-        z-index: 100;
-        display: block;
-    }
-    
-    /* Back-to-top arrow fixed position for mobile */
-    .scroll-to-top-arrow {
-        right: 1rem; /* <-- Change made here for mobile */
-        left: auto;
-        transform: none;
-    }
-    
-    .scroll-to-top-arrow:hover {
-        transform: translateY(-5px);
+    .header-nav {
+        left: 0.75rem;
+        right: 0.75rem;
     }
 
-    /* Footer adjustments */
-    .main-footer {
-        padding: 1rem;
+    .vcard-animation-container {
+        width: min(100%, 300px);
+    }
+
+    .floating-chip {
+        font-size: 0.72rem;
+        padding: 0.55rem 0.7rem;
+    }
+
+    .chip-1,
+    .chip-2,
+    .chip-3,
+    .chip-4 {
+        transform: scale(0.96);
+    }
+
+    .price {
+        font-size: 2.35rem;
     }
 }

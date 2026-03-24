@@ -1,244 +1,332 @@
-/*
- * SmartCardLink Landing Page JavaScript
- *
- * This script handles all the dynamic functionality and animations for the website.
- * It has been updated to be more robust and cross-browser compatible.
- */
-
 document.addEventListener('DOMContentLoaded', () => {
+    const body = document.body;
+    const header = document.getElementById('main-header');
+    const navMenu = document.getElementById('header-nav');
+    const hamburgerBtn = document.getElementById('hamburger-menu');
+    const progressBar = document.getElementById('progress-bar');
+    const backToTopBtn = document.getElementById('back-to-top');
+    const scrollDownArrow = document.querySelector('.scroll-down-arrow');
+    const navLinks = document.querySelectorAll('.header-nav a[href^="#"], .logo-link[href^="#"]');
+    const revealElements = document.querySelectorAll('.reveal');
+    const welcomeTextElement = document.getElementById('hero-welcome-text');
+    const datetimeElement = document.getElementById('current-datetime');
 
-    /* ==================== */
-    /* === Mobile Navigation (Hamburger Menu) === */
-    /* ==================== */
-    const navMenu = document.querySelector('.header-nav');
-    const hamburgerBtn = document.querySelector('.hamburger-menu');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let vcardTimer = null;
+    let typeTimer = null;
+
+    function closeMobileMenu() {
+        if (!navMenu || !hamburgerBtn) return;
+        navMenu.classList.remove('active');
+        hamburgerBtn.classList.remove('active');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+        body.classList.remove('no-scroll', 'nav-open');
+    }
+
+    function openMobileMenu() {
+        if (!navMenu || !hamburgerBtn) return;
+        navMenu.classList.add('active');
+        hamburgerBtn.classList.add('active');
+        hamburgerBtn.setAttribute('aria-expanded', 'true');
+        body.classList.add('no-scroll', 'nav-open');
+    }
 
     if (hamburgerBtn && navMenu) {
         hamburgerBtn.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            document.body.classList.toggle('no-scroll');
-            const icon = hamburgerBtn.querySelector('i');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-times');
+            const isOpen = navMenu.classList.contains('active');
+            if (isOpen) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
         });
 
-        // Close the menu if a link is clicked
-        navMenu.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-                document.body.classList.remove('no-scroll');
-                const icon = hamburgerBtn.querySelector('i');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
+        document.addEventListener('click', (event) => {
+            const clickedInsideMenu = navMenu.contains(event.target);
+            const clickedHamburger = hamburgerBtn.contains(event.target);
+
+            if (!clickedInsideMenu && !clickedHamburger && navMenu.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                closeMobileMenu();
+            }
+        });
+    }
+
+    navLinks.forEach((link) => {
+        link.addEventListener('click', (event) => {
+            const href = link.getAttribute('href');
+            if (!href || !href.startsWith('#')) return;
+
+            const target = document.querySelector(href);
+            if (!target) return;
+
+            event.preventDefault();
+
+            const headerOffset = header ? header.offsetHeight : 0;
+            const targetTop = target.getBoundingClientRect().top + window.pageYOffset - headerOffset + 1;
+
+            window.scrollTo({
+                top: targetTop,
+                behavior: prefersReducedMotion ? 'auto' : 'smooth'
             });
+
+            closeMobileMenu();
         });
+    });
+
+    function updateDateTime() {
+        if (!datetimeElement) return;
+
+        const now = new Date();
+        const formatter = new Intl.DateTimeFormat('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+
+        datetimeElement.textContent = formatter.format(now);
     }
 
-    /* ==================== */
-    /* === Footer Real-time Clock === */
-    /* ==================== */
-    const datetimeElement = document.getElementById('current-datetime');
-    if (datetimeElement) {
-        function updateDateTime() {
-            const now = new Date();
-            const options = {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            };
-            const formattedDate = now.toLocaleDateString('en-US', options);
-            datetimeElement.textContent = formattedDate;
-        }
-
-        updateDateTime();
-        setInterval(updateDateTime, 1000);
-    }
-
-    /* ==================== */
-    /* === Hero Section Animations === */
-    /* ==================== */
-
-    // 1. "Welcome" Typewriter Animation (with endless loop)
-    const welcomeTextElement = document.getElementById('hero-welcome-text');
-    const textToType = "Welcome";
-    let charIndex = 0;
-    let isDeleting = false;
-    let typingSpeed = 150;
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
 
     function typeWelcomeText() {
         if (!welcomeTextElement) return;
-
-        if (!isDeleting && charIndex < textToType.length) {
-            welcomeTextElement.textContent += textToType.charAt(charIndex);
-            charIndex++;
-            setTimeout(typeWelcomeText, typingSpeed);
-        } else if (!isDeleting && charIndex === textToType.length) {
-            isDeleting = true;
-            setTimeout(typeWelcomeText, 2000);
-        } else if (isDeleting && charIndex > 0) {
-            welcomeTextElement.textContent = textToType.substring(0, charIndex - 1);
-            charIndex--;
-            setTimeout(typeWelcomeText, typingSpeed / 2);
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            setTimeout(typeWelcomeText, 500);
+        if (prefersReducedMotion) {
+            welcomeTextElement.textContent = 'Welcome';
+            return;
         }
-    }
-    if (welcomeTextElement) {
-        typeWelcomeText();
-    }
 
+        const word = 'Welcome';
+        let index = 0;
+        let deleting = false;
 
-    // 2. VCard 3D Animation Loop (Refined and controlled)
-    const vcard1Container = document.getElementById('vcard-1-container');
-    const vcard2Container = document.getElementById('vcard-2-container');
-    const vcard1Inner = document.getElementById('vcard-1-inner');
-    const vcard2Inner = document.getElementById('vcard-2-inner');
+        function runTyping() {
+            if (!welcomeTextElement) return;
 
-    let currentVcardContainer = vcard1Container;
-    let currentVcardInner = vcard1Inner;
-    let nextVcardContainer = vcard2Container;
-    let nextVcardInner = vcard2Inner;
+            if (!deleting) {
+                welcomeTextElement.textContent = word.slice(0, index + 1);
+                index += 1;
 
-    function animateVcard() {
-        // Reset transform for a clean slate, and prepare for the intro animation
-        currentVcardContainer.style.transition = 'none';
-        currentVcardContainer.style.transform = 'scale(0.1) translateY(0)';
-        currentVcardInner.style.transition = 'none';
-        currentVcardInner.style.transform = 'rotateY(0deg)';
-        currentVcardContainer.classList.add('active');
-
-        // Step 1: Smooth zoom-in effect from far back
-        setTimeout(() => {
-            currentVcardContainer.style.transition = 'transform 1s ease-out';
-            currentVcardContainer.style.transform = 'scale(1)';
-
-            // Step 2: After zoom-in, smooth flip to the back
-            setTimeout(() => {
-                currentVcardInner.style.transition = 'transform 1s ease-in-out';
-                currentVcardInner.style.transform = 'rotateY(180deg)';
-
-                // Step 3: Rapid 3x 360° spin
-                setTimeout(() => {
-                    currentVcardInner.style.transition = 'transform 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
-                    currentVcardInner.style.transform = 'rotateY(1080deg)';
-
-                    // Step 4: After spin, smoothly zoom out back to origin
-                    setTimeout(() => {
-                        currentVcardContainer.style.transition = 'transform 1s ease-in';
-                        currentVcardContainer.style.transform = 'scale(0.1)';
-
-                        // Transition to the next vcard
-                        setTimeout(() => {
-                            currentVcardContainer.classList.remove('active');
-                            nextVcardContainer.classList.add('active');
-
-                            // Swap cards for the next iteration
-                            [currentVcardContainer, nextVcardContainer] = [nextVcardContainer, currentVcardContainer];
-                            [currentVcardInner, nextVcardInner] = [nextVcardInner, currentVcardInner];
-
-                            // Start the next animation cycle
-                            setTimeout(animateVcard, 500); // Wait 0.5s before the next animation starts
-                        }, 1000); // Duration of the smooth zoom out
-                    }, 1500); // Duration of the rapid spin
-                }, 1000); // Duration of the flip to back
-            }, 1000); // Duration of the initial zoom-in
-        }, 50); // Small delay to ensure CSS reset is applied before starting
-    }
-
-    if (vcard1Container && vcard2Container) {
-        animateVcard();
-    }
-
-
-    /* ==================== */
-    /* === Scroll-based Animations === */
-    /* ==================== */
-
-    // Observer for "About SmartCardLink Kenya" section text
-    const aboutText = document.getElementById('about-text-content');
-    if (aboutText) {
-        const aboutObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate');
-                    observer.unobserve(entry.target);
+                if (index === word.length) {
+                    deleting = true;
+                    typeTimer = setTimeout(runTyping, 1500);
+                    return;
                 }
+
+                typeTimer = setTimeout(runTyping, 110);
+            } else {
+                welcomeTextElement.textContent = word.slice(0, index - 1);
+                index -= 1;
+
+                if (index === 0) {
+                    deleting = false;
+                    typeTimer = setTimeout(runTyping, 500);
+                    return;
+                }
+
+                typeTimer = setTimeout(runTyping, 70);
+            }
+        }
+
+        runTyping();
+    }
+
+    typeWelcomeText();
+
+    function initRevealObserver() {
+        if (!revealElements.length) return;
+
+        if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+            revealElements.forEach((element) => element.classList.add('reveal-visible'));
+            return;
+        }
+
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('reveal-visible');
+                obs.unobserve(entry.target);
             });
         }, {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.5
+            threshold: 0.12,
+            rootMargin: '0px 0px -40px 0px'
         });
-        aboutObserver.observe(aboutText);
+
+        revealElements.forEach((element) => observer.observe(element));
     }
-    
-    // Observer for glowing & pop-up effect on content cards
-    const animatedElements = document.querySelectorAll('.animated-on-scroll');
-    const animateObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('scroll-visible');
-                observer.unobserve(entry.target);
+
+    initRevealObserver();
+
+    const sections = document.querySelectorAll('main section[id]');
+    const navBtns = document.querySelectorAll('.header-nav a[href^="#"]');
+
+    function updateActiveNavLink() {
+        const headerOffset = header ? header.offsetHeight + 40 : 120;
+        let currentSectionId = '';
+
+        sections.forEach((section) => {
+            const sectionTop = section.offsetTop - headerOffset;
+            const sectionBottom = sectionTop + section.offsetHeight;
+
+            if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
+                currentSectionId = section.id;
             }
         });
-    }, {
-        threshold: 0.2
-    });
-    animatedElements.forEach(el => {
-        animateObserver.observe(el);
-    });
 
-    // Observer for Back-to-Top button and Scroll-Down button
-    const backToTopBtn = document.getElementById('back-to-top');
-    const scrollDownArrow = document.querySelector('.scroll-down-arrow');
-    const contactSection = document.getElementById('contact');
+        navBtns.forEach((btn) => {
+            const href = btn.getAttribute('href');
+            btn.classList.toggle('active', href === `#${currentSectionId}`);
+        });
+    }
 
-    function checkScrollButtons() {
-        const lastSection = document.querySelector('main > section:last-of-type');
-        const isAtLastSection = (window.innerHeight + window.scrollY) >= lastSection.offsetTop;
+    function updateProgressBar() {
+        if (!progressBar) return;
+        const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0;
+        progressBar.style.width = `${Math.min(Math.max(progress, 0), 100)}%`;
+    }
 
-        if (isAtLastSection) {
-            scrollDownArrow.style.opacity = '0';
-            scrollDownArrow.style.visibility = 'hidden';
-            backToTopBtn.style.opacity = '1';
-            backToTopBtn.style.visibility = 'visible';
-        } else {
-            scrollDownArrow.style.opacity = '1';
-            scrollDownArrow.style.visibility = 'visible';
-            backToTopBtn.style.opacity = '0';
-            backToTopBtn.style.visibility = 'hidden';
+    function updateHeaderState() {
+        if (!header) return;
+        header.classList.toggle('header-scrolled', window.scrollY > 20);
+    }
+
+    function updateScrollButtons() {
+        if (backToTopBtn) {
+            backToTopBtn.classList.toggle('visible', window.scrollY > 500);
         }
 
-        // Show back to top button on desktop when scrolled
-        if (window.innerWidth > 768 && window.scrollY > 300) {
-            backToTopBtn.classList.add('visible');
-        } else {
-            backToTopBtn.classList.remove('visible');
+        if (scrollDownArrow) {
+            if (window.scrollY > 140) {
+                scrollDownArrow.style.opacity = '0';
+                scrollDownArrow.style.visibility = 'hidden';
+                scrollDownArrow.style.pointerEvents = 'none';
+            } else {
+                scrollDownArrow.style.opacity = '1';
+                scrollDownArrow.style.visibility = 'visible';
+                scrollDownArrow.style.pointerEvents = 'auto';
+            }
         }
     }
-    window.addEventListener('scroll', checkScrollButtons);
-    checkScrollButtons(); // Initial check on page load
 
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
+    function handleScrollState() {
+        updateHeaderState();
+        updateProgressBar();
+        updateScrollButtons();
+        updateActiveNavLink();
+    }
+
+    window.addEventListener('scroll', handleScrollState, { passive: true });
+    handleScrollState();
+
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: prefersReducedMotion ? 'auto' : 'smooth'
             });
-            if (window.innerWidth <= 768) {
-                navMenu.classList.remove('active');
-                document.body.classList.remove('no-scroll');
-                const icon = hamburgerBtn.querySelector('i');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
+        });
+    }
+
+    function initVCardAnimation() {
+        const vcard1Container = document.getElementById('vcard-1-container');
+        const vcard2Container = document.getElementById('vcard-2-container');
+        const vcard1Inner = document.getElementById('vcard-1-inner');
+        const vcard2Inner = document.getElementById('vcard-2-inner');
+
+        if (!vcard1Container || !vcard2Container || !vcard1Inner || !vcard2Inner) return;
+
+        if (prefersReducedMotion) {
+            vcard1Container.classList.add('active');
+            vcard2Container.classList.remove('active');
+            return;
+        }
+
+        let cards = [
+            { container: vcard1Container, inner: vcard1Inner },
+            { container: vcard2Container, inner: vcard2Inner }
+        ];
+
+        cards.forEach(({ container, inner }, index) => {
+            container.classList.toggle('active', index === 0);
+            inner.style.transform = 'rotateY(0deg)';
+        });
+
+        function setCardState(activeCard, inactiveCard) {
+            activeCard.container.classList.add('active');
+            inactiveCard.container.classList.remove('active');
+            inactiveCard.inner.style.transition = 'none';
+            inactiveCard.inner.style.transform = 'rotateY(0deg)';
+        }
+
+        function cycleCards() {
+            const current = cards[0];
+            const next = cards[1];
+
+            current.container.classList.add('active');
+            next.container.classList.remove('active');
+
+            current.inner.style.transition = 'transform 1.15s cubic-bezier(0.22, 1, 0.36, 1)';
+            current.inner.style.transform = 'rotateY(180deg)';
+
+            vcardTimer = setTimeout(() => {
+                next.container.classList.add('active');
+                current.container.classList.remove('active');
+
+                next.inner.style.transition = 'none';
+                next.inner.style.transform = 'rotateY(0deg)';
+
+                cards = [next, current];
+                vcardTimer = setTimeout(cycleCards, 2600);
+            }, 1900);
+        }
+
+        setCardState(cards[0], cards[1]);
+        vcardTimer = setTimeout(cycleCards, 1800);
+    }
+
+    initVCardAnimation();
+
+    document.querySelectorAll('.faq-item summary').forEach((summary) => {
+        summary.addEventListener('click', () => {
+            const detail = summary.parentElement;
+            if (!detail) return;
+
+            setTimeout(() => {
+                if (!detail.open) return;
+                const rect = detail.getBoundingClientRect();
+                const headerHeight = header ? header.offsetHeight : 0;
+
+                if (rect.top < headerHeight + 10) {
+                    window.scrollBy({
+                        top: rect.top - headerHeight - 16,
+                        behavior: prefersReducedMotion ? 'auto' : 'smooth'
+                    });
+                }
+            }, 120);
         });
     });
 
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            closeMobileMenu();
+        }
+    });
+
+    window.addEventListener('beforeunload', () => {
+        if (vcardTimer) clearTimeout(vcardTimer);
+        if (typeTimer) clearTimeout(typeTimer);
+    });
 });
