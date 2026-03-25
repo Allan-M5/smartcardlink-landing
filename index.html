@@ -4,11 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SmartCardLink Kenya</title>
-    <meta name="description" content="Premium NFC + QR Digital vCard for modern networking in Kenya. Tap once or scan QR to open your live profile, direct actions, maps, booking, socials, and powerful PRO tools." />
+    <meta
+        name="description"
+        content="Premium NFC + QR Digital vCard for modern networking in Kenya. Tap once or scan QR to open your live profile, direct actions, maps, booking, socials, and powerful PRO tools."
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="mobile.css" />
 </head>
@@ -17,7 +26,10 @@
     <div class="scroll-progress" id="scroll-progress"></div>
 
     <video autoplay muted loop playsinline id="bg-video">
-        <source src="https://res.cloudinary.com/dicvwaud3/video/upload/v1754439276/oyvgam7oizwizgwxaxge.mp4" type="video/mp4" />
+        <source
+            src="https://res.cloudinary.com/dicvwaud3/video/upload/v1754439276/oyvgam7oizwizgwxaxge.mp4"
+            type="video/mp4"
+        />
     </video>
 
     <div class="bg-overlay"></div>
@@ -26,8 +38,12 @@
     <div class="bg-blob blob-3"></div>
 
     <header class="main-header" id="main-header">
-        <a href="#hero" class="logo-link">
-            <img src="https://res.cloudinary.com/dicvwaud3/image/upload/v1754439242/vdkx5xtzizphhqcba4tt.png" alt="SmartCardLink Logo" class="logo" />
+        <a href="#hero" class="logo-link" aria-label="SmartCardLink Home">
+            <img
+                src="https://res.cloudinary.com/dicvwaud3/image/upload/v1754439242/vdkx5xtzizphhqcba4tt.png"
+                alt="SmartCardLink Logo"
+                class="logo"
+            />
         </a>
 
         <button class="hamburger-menu" id="hamburger-menu" aria-label="Open navigation">
@@ -37,6 +53,7 @@
         <nav class="header-nav" id="header-nav">
             <a href="#about" class="nav-btn">About</a>
             <a href="#features" class="nav-btn">Features</a>
+            <a href="#how-it-works" class="nav-btn">How It Works</a>
             <a href="#benefits" class="nav-btn">Benefits</a>
             <a href="#pricing" class="nav-btn">Pricing</a>
             <a href="#faq" class="nav-btn">FAQ</a>
@@ -55,27 +72,43 @@
             <div class="hero-content-wrapper">
                 <div class="hero-left">
                     <h1 class="hero-main-title">
-                        Tap Once or Scan QR.
-                        <span>Stay Remembered.</span>
+                        <span class="word-stomp">Tap Once</span>
+                        <span class="word-static">or Scan QR.</span>
+                        <span class="word-wipe">Stay</span>
+                        <span class="word-glow">Remembered.</span>
                     </h1>
 
                     <p class="hero-support-line">
                         A premium smart card and live digital profile built to make every introduction faster, sharper, and more valuable.
                     </p>
 
-                    <p class="hero-tagline-2">
+                    <p
+                        class="hero-tagline-2 type-target"
+                        data-type-speed="12"
+                        data-full-text="Open your live profile instantly with direct call, WhatsApp, email, save-contact, SmartCardLink URL, booking, maps, working hours, social links, and powerful PRO upgrades like resume access, analytics, reminder tools, and custom theme color."
+                    >
                         Open your live profile instantly with direct call, WhatsApp, email, save-contact, SmartCardLink URL, booking, maps, working hours, social links, and powerful PRO upgrades like resume access, analytics, reminder tools, and custom theme color.
                     </p>
 
                     <div class="hero-cta-row">
-                        <a href="https://smartcardlink-public.onrender.com/client-form.html" target="_blank" rel="noopener noreferrer" class="cta-button hero-cta-button magnetic-btn">
-                            <span>Apply Your vCard</span>
+                        <a
+                            href="https://smartcardlink-public.onrender.com/client-form.html?package=Standard%20vCard&plan=standard"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="cta-button hero-cta-button magnetic-btn"
+                        >
+                            <span>Get Standard</span>
                             <i class="fas fa-arrow-up-right-from-square"></i>
                         </a>
 
-                        <a href="#pricing" class="cta-button ghost-cta-button magnetic-btn">
-                            <span>View Packages</span>
-                            <i class="fas fa-layer-group"></i>
+                        <a
+                            href="https://smartcardlink-public.onrender.com/client-form.html?package=PRO%20vCard&plan=pro"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="cta-button ghost-cta-button magnetic-btn"
+                        >
+                            <span>Get PRO</span>
+                            <i class="fas fa-crown"></i>
                         </a>
                     </div>
 
@@ -99,35 +132,49 @@
                     <div class="hero-card-glow hero-card-glow-1"></div>
                     <div class="hero-card-glow hero-card-glow-2"></div>
 
-                    <div class="vcard-animation-container tilt-card" id="vcard-tilt-target">
+                    <div class="hero-media-stage tilt-card" id="hero-media-stage">
                         <div class="feature-bubble-layer" id="featureBubbleLayer"></div>
 
-                        <div class="vcard-wrapper vcard-1 active" id="vcard-1-container">
-                            <div class="vcard-inner" id="vcard-1-inner">
-                                <div class="vcard-face vcard-front" style="background-image: url('https://res.cloudinary.com/dicvwaud3/image/upload/v1754439245/bq5mglw3egztlhz5j3bf.png')"></div>
-                                <div class="vcard-face vcard-back" style="background-image: url('https://res.cloudinary.com/dicvwaud3/image/upload/v1754439242/adzopjcv7xh5w1zbamcq.png')"></div>
-                                <div class="card-shine"></div>
-                            </div>
-                        </div>
+                        <div class="hero-video-shell liquid-glass-container">
+                            <video
+                                class="hero-card-video"
+                                autoplay
+                                muted
+                                loop
+                                playsinline
+                                preload="auto"
+                            >
+                                <source
+                                    src="https://res.cloudinary.com/dicvwaud3/video/upload/v1774432067/q5huzhgu0myu0tcjm6t3.mp4"
+                                    type="video/mp4"
+                                />
+                            </video>
 
-                        <div class="vcard-wrapper vcard-2" id="vcard-2-container">
-                            <div class="vcard-inner" id="vcard-2-inner">
-                                <div class="vcard-face vcard-front" style="background-image: url('https://res.cloudinary.com/dicvwaud3/image/upload/v1754439251/ltkrmeijncbjtsbjlzeo.png')"></div>
-                                <div class="vcard-face vcard-back" style="background-image: url('https://res.cloudinary.com/dicvwaud3/image/upload/v1754439242/efppswvwhzs7swycaxsl.png')"></div>
-                                <div class="card-shine"></div>
+                            <div class="hero-video-overlay">
+                                <div class="hero-video-label">
+                                    <i class="fas fa-wave-square"></i>
+                                    <span>Tap • Scan • Open • Act</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <a href="#about" class="scroll-down-arrow"><i class="fas fa-chevron-down"></i></a>
+            <a href="#about" class="scroll-down-arrow" aria-label="Scroll down">
+                <i class="fas fa-chevron-down"></i>
+            </a>
         </section>
 
         <section class="content-section" id="about">
             <div class="content-wrapper">
                 <h2 class="section-title">A Smarter Identity Than an Ordinary Business Card</h2>
-                <p class="about-text typing-reveal" id="about-text-content">
+                <p
+                    class="about-text type-target left-reveal"
+                    id="about-text-content"
+                    data-type-speed="10"
+                    data-full-text="SmartCardLink vCard turns one introduction into a full premium digital experience. Instead of handing over a paper card that can be lost, ignored, or forgotten, you give people instant access to your live profile through NFC tap or QR scan. Your profile can open direct call, WhatsApp, email, save-contact, booking, business website, portfolio links, Google Maps directions, working hours, and social media in one polished place. For professionals who want stronger credibility, PRO unlocks custom theme color, protected resume access, analytics insight, and reminder tools that make your networking feel more powerful and more intentional."
+                >
                     SmartCardLink vCard turns one introduction into a full premium digital experience. Instead of handing over a paper card that can be lost, ignored, or forgotten, you give people instant access to your live profile through NFC tap or QR scan. Your profile can open direct call, WhatsApp, email, save-contact, booking, business website, portfolio links, Google Maps directions, working hours, and social media in one polished place. For professionals who want stronger credibility, PRO unlocks custom theme color, protected resume access, analytics insight, and reminder tools that make your networking feel more powerful and more intentional.
                 </p>
             </div>
@@ -138,53 +185,149 @@
                 <h2 class="section-title">Feature Depth That Feels Premium</h2>
 
                 <div class="feature-grid">
-                    <div class="feature-card animated-on-scroll liquid-glass-container">
-                        <div class="feature-subtitle">Instant access</div>
-                        <h3>QR + NFC Smart Sharing</h3>
-                        <p>Share your profile instantly by tap or scan, with no app required for the person receiving it.</p>
-                    </div>
+                    <article class="feature-card animated-on-scroll liquid-glass-container">
+                        <div class="feature-card-icon"><i class="fas fa-wifi"></i></div>
+                        <div class="feature-subtitle">NFC tap sharing</div>
+                        <h3>Tap to Open Instantly</h3>
+                        <p>Your card opens a live profile with one premium motion, giving a faster introduction than paper ever could.</p>
+                    </article>
 
-                    <div class="feature-card animated-on-scroll liquid-glass-container">
-                        <div class="feature-subtitle">Live presence</div>
-                        <h3>Shareable SmartCardLink URL</h3>
-                        <p>Your live profile can be opened anytime from chat, social media, email, or a direct link.</p>
-                    </div>
+                    <article class="feature-card animated-on-scroll liquid-glass-container">
+                        <div class="feature-card-icon"><i class="fas fa-qrcode"></i></div>
+                        <div class="feature-subtitle">QR scan access</div>
+                        <h3>Reliable Backup for Every Phone</h3>
+                        <p>Even when NFC is unavailable, QR keeps the same instant experience smooth, fast, and friction-free.</p>
+                    </article>
 
-                    <div class="feature-card animated-on-scroll liquid-glass-container">
-                        <div class="feature-subtitle">Direct action</div>
+                    <article class="feature-card animated-on-scroll liquid-glass-container">
+                        <div class="feature-card-icon"><i class="fas fa-link"></i></div>
+                        <div class="feature-subtitle">Live profile URL</div>
+                        <h3>Shareable Anywhere</h3>
+                        <p>Use your SmartCardLink URL in chats, social bios, websites, email signatures, and digital campaigns.</p>
+                    </article>
+
+                    <article class="feature-card animated-on-scroll liquid-glass-container">
+                        <div class="feature-card-icon"><i class="fas fa-address-card"></i></div>
+                        <div class="feature-subtitle">Fast direct actions</div>
                         <h3>Call, WhatsApp, Email & Save Contact</h3>
-                        <p>Let people connect immediately instead of manually typing your details later.</p>
-                    </div>
+                        <p>Turn attention into action before interest cools down by giving people immediate next steps in one place.</p>
+                    </article>
 
-                    <div class="feature-card animated-on-scroll liquid-glass-container">
-                        <div class="feature-subtitle">Business clarity</div>
-                        <h3>Bio, Services, Hours & Location</h3>
-                        <p>Display your brand story, working hours, address, and Google Maps directions in one clean experience.</p>
-                    </div>
+                    <article class="feature-card animated-on-scroll liquid-glass-container">
+                        <div class="feature-card-icon"><i class="fas fa-building"></i></div>
+                        <div class="feature-subtitle">Business identity</div>
+                        <h3>Bio, Services, Socials & Brand Presence</h3>
+                        <p>Present your business story, social channels, services, and credibility in a cleaner premium layout.</p>
+                    </article>
 
-                    <div class="feature-card animated-on-scroll liquid-glass-container">
-                        <div class="feature-subtitle">Stronger branding</div>
-                        <h3>Socials, Website & Portfolio</h3>
-                        <p>Promote your business website, portfolio, and social channels from the same premium profile.</p>
-                    </div>
+                    <article class="feature-card animated-on-scroll liquid-glass-container">
+                        <div class="feature-card-icon"><i class="fas fa-globe"></i></div>
+                        <div class="feature-subtitle">Web and portfolio support</div>
+                        <h3>Promote Your Best Links</h3>
+                        <p>Bring your website, portfolio, booking flow, and strongest digital assets into the same polished profile.</p>
+                    </article>
 
-                    <div class="feature-card animated-on-scroll liquid-glass-container">
-                        <div class="feature-subtitle">Professional expansion</div>
-                        <h3>Appointment & Action-Ready Flow</h3>
-                        <p>Make it easier for clients, employers, and leads to act immediately while interest is still high.</p>
-                    </div>
+                    <article class="feature-card animated-on-scroll liquid-glass-container">
+                        <div class="feature-card-icon"><i class="fas fa-clock"></i></div>
+                        <div class="feature-subtitle">Working hours and maps</div>
+                        <h3>Help People Find and Reach You</h3>
+                        <p>Make visits, deliveries, meetings, and customer decisions easier using hours and Google Maps direction support.</p>
+                    </article>
 
-                    <div class="feature-card animated-on-scroll liquid-glass-container">
-                        <div class="feature-subtitle pro-accent">PRO power</div>
-                        <h3>Protected Resume / CV Access</h3>
-                        <p>PRO adds a secure resume section with controlled viewing and downloading for more serious professional use.</p>
-                    </div>
+                    <article class="feature-card animated-on-scroll liquid-glass-container">
+                        <div class="feature-card-icon"><i class="fas fa-calendar-check"></i></div>
+                        <div class="feature-subtitle">Booking capability</div>
+                        <h3>Action-Ready Professional Flow</h3>
+                        <p>Support appointments and quick next actions so leads, employers, and clients respond while momentum is still high.</p>
+                    </article>
 
-                    <div class="feature-card animated-on-scroll liquid-glass-container">
-                        <div class="feature-subtitle pro-accent">PRO insight</div>
-                        <h3>Analytics, Reminder & Theme Control</h3>
-                        <p>Track engagement, use reminder functionality, and personalize your theme color for a stronger branded identity.</p>
-                    </div>
+                    <article class="feature-card animated-on-scroll liquid-glass-container">
+                        <div class="feature-card-icon"><i class="fas fa-palette"></i></div>
+                        <div class="feature-subtitle">Theme flexibility</div>
+                        <h3>Default Gold on Standard, Custom Feel on PRO</h3>
+                        <p>Standard stays premium in gold, while PRO opens theme customization for a stronger branded impression.</p>
+                    </article>
+
+                    <article class="feature-card animated-on-scroll liquid-glass-container">
+                        <div class="feature-card-icon"><i class="fas fa-file-shield"></i></div>
+                        <div class="feature-subtitle">PRO resume / CV</div>
+                        <h3>Protected Professional Sharing</h3>
+                        <p>Resume access on PRO is better controlled, helping employers or serious clients view the right documents more securely.</p>
+                    </article>
+
+                    <article class="feature-card animated-on-scroll liquid-glass-container">
+                        <div class="feature-card-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="feature-subtitle">PRO analytics</div>
+                        <h3>Understand Engagement Better</h3>
+                        <p>Analytics helps you measure attention and refine how you use your card for sales, jobs, branding, or follow-up.</p>
+                    </article>
+
+                    <article class="feature-card animated-on-scroll liquid-glass-container">
+                        <div class="feature-card-icon"><i class="fas fa-bell"></i></div>
+                        <div class="feature-subtitle">PRO reminder tool</div>
+                        <h3>Keep Opportunities Warm</h3>
+                        <p>Reminder tools add practical value beyond sharing, helping you stay intentional about people and moments that matter.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section how-it-works-section" id="how-it-works">
+            <div class="content-wrapper">
+                <h2 class="section-title">How SmartCardLink Works</h2>
+                <p class="how-it-works-intro">
+                    SmartCardLink is built to make the first impression feel premium and the next action feel effortless.
+                </p>
+
+                <div class="how-it-works-grid">
+                    <article class="how-step-card animated-on-scroll liquid-glass-container">
+                        <div class="how-step-number">01</div>
+                        <div class="how-step-media">
+                            <video autoplay muted loop playsinline preload="auto">
+                                <source
+                                    src="https://res.cloudinary.com/dicvwaud3/video/upload/v1774432067/q5huzhgu0myu0tcjm6t3.mp4"
+                                    type="video/mp4"
+                                />
+                            </video>
+                        </div>
+                        <h3>Tap or Scan</h3>
+                        <p>People open your SmartCardLink instantly through NFC tap or QR scan without downloading an app.</p>
+                    </article>
+
+                    <article class="how-step-card animated-on-scroll liquid-glass-container">
+                        <div class="how-step-number">02</div>
+                        <div class="how-step-media">
+                            <video autoplay muted loop playsinline preload="auto">
+                                <source
+                                    src="https://res.cloudinary.com/dicvwaud3/video/upload/v1774432067/q5huzhgu0myu0tcjm6t3.mp4"
+                                    type="video/mp4"
+                                />
+                            </video>
+                        </div>
+                        <h3>Open Your Live Profile</h3>
+                        <p>Your profile reveals call, WhatsApp, email, save-contact, maps, website, socials, booking, and other useful actions.</p>
+                    </article>
+
+                    <article class="how-step-card animated-on-scroll liquid-glass-container">
+                        <div class="how-step-number">03</div>
+                        <div class="how-step-icons">
+                            <div class="how-icon-pill"><i class="fas fa-phone"></i><span>Call</span></div>
+                            <div class="how-icon-pill"><i class="fab fa-whatsapp"></i><span>WhatsApp</span></div>
+                            <div class="how-icon-pill"><i class="fas fa-envelope"></i><span>Email</span></div>
+                            <div class="how-icon-pill"><i class="fas fa-address-book"></i><span>Save Contact</span></div>
+                            <div class="how-icon-pill"><i class="fas fa-location-dot"></i><span>Maps</span></div>
+                            <div class="how-icon-pill"><i class="fas fa-calendar-check"></i><span>Booking</span></div>
+                        </div>
+                        <h3>Turn Attention Into Action</h3>
+                        <p>Instead of promising to contact you later, people can act instantly while the conversation is still fresh.</p>
+                    </article>
+                </div>
+
+                <div class="how-it-works-bottom-note animated-on-scroll liquid-glass-container">
+                    <i class="fas fa-crown"></i>
+                    <p>
+                        PRO takes the same experience further with custom theme color, protected resume access, analytics, and reminder tools.
+                    </p>
                 </div>
             </div>
         </section>
@@ -194,18 +337,77 @@
                 <h2 class="section-title">Why SmartCardLink Feels Better to Use</h2>
 
                 <div class="benefit-grid">
-                    <div class="benefit-card animated-on-scroll liquid-glass-container"><i class="fas fa-star"></i><p>Creates a stronger first impression</p></div>
-                    <div class="benefit-card animated-on-scroll liquid-glass-container"><i class="fas fa-bolt"></i><p>Faster lead follow-up while interest is fresh</p></div>
-                    <div class="benefit-card animated-on-scroll liquid-glass-container"><i class="fas fa-gem"></i><p>More premium than handing out paper cards</p></div>
-                    <div class="benefit-card animated-on-scroll liquid-glass-container"><i class="fas fa-address-book"></i><p>People can save your contact instantly</p></div>
-                    <div class="benefit-card animated-on-scroll liquid-glass-container"><i class="fas fa-mobile-screen-button"></i><p>Works beautifully on modern phones</p></div>
-                    <div class="benefit-card animated-on-scroll liquid-glass-container"><i class="fas fa-share-nodes"></i><p>One profile can carry many useful links</p></div>
-                    <div class="benefit-card animated-on-scroll liquid-glass-container"><i class="fas fa-map-location-dot"></i><p>Clients can find your business with less friction</p></div>
-                    <div class="benefit-card animated-on-scroll liquid-glass-container"><i class="fas fa-calendar-check"></i><p>Booking and action flow feels more direct</p></div>
-                    <div class="benefit-card animated-on-scroll liquid-glass-container"><i class="fas fa-shield-halved"></i><p>PRO adds controlled resume visibility</p></div>
-                    <div class="benefit-card animated-on-scroll liquid-glass-container"><i class="fas fa-chart-simple"></i><p>PRO adds profile analytics insight</p></div>
-                    <div class="benefit-card animated-on-scroll liquid-glass-container"><i class="fas fa-bell"></i><p>PRO adds reminder tools for warmer follow-up</p></div>
-                    <div class="benefit-card animated-on-scroll liquid-glass-container"><i class="fas fa-palette"></i><p>PRO supports stronger personal brand styling</p></div>
+                    <article class="benefit-card animated-on-scroll liquid-glass-container">
+                        <i class="fas fa-face-smile"></i>
+                        <h3>More enjoyable than paper cards</h3>
+                        <p>The experience feels modern, interactive, and memorable instead of static and forgettable.</p>
+                    </article>
+
+                    <article class="benefit-card animated-on-scroll liquid-glass-container">
+                        <i class="fas fa-bolt"></i>
+                        <h3>Faster connection and follow-up</h3>
+                        <p>People move from conversation to action immediately, reducing delay and lost momentum.</p>
+                    </article>
+
+                    <article class="benefit-card animated-on-scroll liquid-glass-container">
+                        <i class="fas fa-star"></i>
+                        <h3>Better first impression</h3>
+                        <p>It signals that your brand takes presentation, convenience, and quality seriously.</p>
+                    </article>
+
+                    <article class="benefit-card animated-on-scroll liquid-glass-container">
+                        <i class="fas fa-shield-halved"></i>
+                        <h3>Stronger business credibility</h3>
+                        <p>A live premium profile gives clients and employers more confidence than a paper card with limited information.</p>
+                    </article>
+
+                    <article class="benefit-card animated-on-scroll liquid-glass-container">
+                        <i class="fas fa-funnel-dollar"></i>
+                        <h3>Easier lead conversion</h3>
+                        <p>Call, WhatsApp, maps, booking, and contact-saving all reduce friction and make conversion easier.</p>
+                    </article>
+
+                    <article class="benefit-card animated-on-scroll liquid-glass-container">
+                        <i class="fas fa-brain"></i>
+                        <h3>Less chance of being forgotten</h3>
+                        <p>People remember a richer digital experience more than a card that disappears into a pocket.</p>
+                    </article>
+
+                    <article class="benefit-card animated-on-scroll liquid-glass-container">
+                        <i class="fas fa-mobile-screen-button"></i>
+                        <h3>One-tap multi-action access</h3>
+                        <p>Your profile carries many useful actions without forcing people to search for details manually.</p>
+                    </article>
+
+                    <article class="benefit-card animated-on-scroll liquid-glass-container">
+                        <i class="fas fa-user-tie"></i>
+                        <h3>Better employer and client confidence</h3>
+                        <p>PRO especially helps present yourself more seriously when credibility and trust matter.</p>
+                    </article>
+
+                    <article class="benefit-card animated-on-scroll liquid-glass-container">
+                        <i class="fas fa-gem"></i>
+                        <h3>Polished networking experience</h3>
+                        <p>Everything feels more intentional, smoother, and more premium from the very first interaction.</p>
+                    </article>
+
+                    <article class="benefit-card animated-on-scroll liquid-glass-container">
+                        <i class="fas fa-palette"></i>
+                        <h3>PRO custom theme color</h3>
+                        <p>Strengthen branded identity with a richer personalized feel beyond default gold styling.</p>
+                    </article>
+
+                    <article class="benefit-card animated-on-scroll liquid-glass-container">
+                        <i class="fas fa-file-shield"></i>
+                        <h3>PRO protected resume access</h3>
+                        <p>Keep professional sharing more controlled while still making serious opportunities easy to pursue.</p>
+                    </article>
+
+                    <article class="benefit-card animated-on-scroll liquid-glass-container">
+                        <i class="fas fa-chart-pie"></i>
+                        <h3>PRO analytics and reminders</h3>
+                        <p>Gain insight and follow-up utility that makes your networking more intentional over time.</p>
+                    </article>
                 </div>
             </div>
         </section>
@@ -215,10 +417,12 @@
                 <h2 class="section-title">Choose Your SmartCardLink Level</h2>
 
                 <div class="pricing-grid">
-                    <div class="pricing-card standard-card animated-on-scroll liquid-glass-container">
+                    <article class="pricing-card standard-card animated-on-scroll liquid-glass-container">
+                        <div class="pricing-card-badge">Standard</div>
                         <h3 class="pricing-package-title">
                             <span class="pricing-title-container default-gold">Standard vCard</span>
                         </h3>
+                        <p class="pricing-note">Premium gold styling for clean, fast, modern networking.</p>
 
                         <ul>
                             <li><i class="fas fa-check-circle"></i> Smart digital business profile</li>
@@ -226,104 +430,140 @@
                             <li><i class="fas fa-check-circle"></i> Live shareable vCard link</li>
                             <li><i class="fas fa-check-circle"></i> Call, WhatsApp, email and save-contact actions</li>
                             <li><i class="fas fa-check-circle"></i> Business details, bio and social links</li>
-                            <li><i class="fas fa-check-circle"></i> Working hours and Google Maps direction support</li>
+                            <li><i class="fas fa-check-circle"></i> Working hours and Google Maps support</li>
                             <li><i class="fas fa-check-circle"></i> Default premium gold theme</li>
                             <li><i class="fas fa-check-circle"></i> Easy future upgrade to PRO</li>
                         </ul>
 
-                        <a href="https://smartcardlink-public.onrender.com/client-form.html" target="_blank" rel="noopener noreferrer" class="cta-button pricing-button standard-button magnetic-btn">
+                        <a
+                            href="https://smartcardlink-public.onrender.com/client-form.html?package=Standard%20vCard&plan=standard"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="cta-button pricing-button standard-button magnetic-btn"
+                        >
                             Ksh 1,500
                         </a>
-                    </div>
+                    </article>
 
-                    <div class="pricing-card pro-card animated-on-scroll liquid-glass-container">
+                    <article class="pricing-card pro-card animated-on-scroll liquid-glass-container">
+                        <div class="pricing-card-badge pro-badge">PRO</div>
                         <h3 class="pricing-package-title">
                             <span class="pricing-title-container gradient-pro">PRO vCard</span>
                         </h3>
+                        <p class="pricing-note">Luxury chromatic styling with stronger professional tools and custom-brand feel.</p>
 
                         <ul>
                             <li><i class="fas fa-check-circle"></i> Everything in Standard</li>
-                            <li><i class="fas fa-check-circle"></i> Custom preferred theme color</li>
-                            <li><i class="fas fa-check-circle"></i> Professional Resume / CV section</li>
-                            <li><i class="fas fa-check-circle"></i> Secure 4-digit resume password access</li>
-                            <li><i class="fas fa-check-circle"></i> Resume view and download control</li>
-                            <li><i class="fas fa-check-circle"></i> Profile analytics access</li>
-                            <li><i class="fas fa-check-circle"></i> Contact reminder feature</li>
+                            <li><i class="fas fa-check-circle"></i> Custom theme color potential</li>
+                            <li><i class="fas fa-check-circle"></i> Resume / CV support</li>
+                            <li><i class="fas fa-check-circle"></i> Protected resume access control</li>
+                            <li><i class="fas fa-check-circle"></i> Analytics insight</li>
+                            <li><i class="fas fa-check-circle"></i> Reminder tool</li>
                             <li><i class="fas fa-check-circle"></i> Stronger premium presentation for employers and clients</li>
-                            <li><i class="fas fa-check-circle"></i> Higher professional credibility and conversion value</li>
+                            <li><i class="fas fa-check-circle"></i> Better long-term branded flexibility</li>
                         </ul>
 
-                        <a href="https://smartcardlink-public.onrender.com/client-form.html" target="_blank" rel="noopener noreferrer" class="cta-button pricing-button pro-button magnetic-btn">
+                        <a
+                            href="https://smartcardlink-public.onrender.com/client-form.html?package=PRO%20vCard&plan=pro"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="cta-button pricing-button pro-button magnetic-btn"
+                        >
                             Ksh 2,500
                         </a>
-                    </div>
+                    </article>
                 </div>
             </div>
         </section>
 
         <section class="content-section" id="faq">
             <div class="content-wrapper">
-                <h2 class="section-title">Questions People Ask Before They Upgrade</h2>
+                <h2 class="section-title">Questions People Ask</h2>
 
                 <div class="faq-container">
                     <details class="faq-item animated-on-scroll liquid-glass-container">
-                        <summary>How does SmartCardLink work?</summary>
-                        <p>You tap your card on a compatible smartphone or let someone scan your QR code, and your live digital profile opens instantly.</p>
+                        <summary>How do the NFC and QR features work?</summary>
+                        <p>You tap the card on a compatible phone or let someone scan the QR code and the live profile opens instantly.</p>
                     </details>
 
                     <details class="faq-item animated-on-scroll liquid-glass-container">
-                        <summary>Do people need to install an app?</summary>
-                        <p>No. SmartCardLink is designed to open through phone-native NFC or QR access with no app required for the other person.</p>
+                        <summary>Do people need an app to use SmartCardLink?</summary>
+                        <p>No. The experience is designed to work through native phone behavior, making access easier and faster.</p>
                     </details>
 
                     <details class="faq-item animated-on-scroll liquid-glass-container">
-                        <summary>What can someone do after opening my profile?</summary>
-                        <p>They can call, WhatsApp, email, save your contact, visit your website or portfolio, view your social links, check directions, see your hours, and use other actions you choose to make available.</p>
+                        <summary>Which phones can use it?</summary>
+                        <p>Modern smartphones can open the profile by NFC or QR, and QR gives reliable access even where NFC is not active.</p>
                     </details>
 
                     <details class="faq-item animated-on-scroll liquid-glass-container">
-                        <summary>Can I update my information later?</summary>
-                        <p>Yes. Your SmartCardLink profile is built to stay useful as your role, contacts, links, and business details evolve.</p>
+                        <summary>What happens if NFC is not available?</summary>
+                        <p>QR keeps the same instant-access experience alive, so your profile is still easy to open and use.</p>
                     </details>
 
                     <details class="faq-item animated-on-scroll liquid-glass-container">
-                        <summary>Does SmartCardLink work for both business and personal use?</summary>
-                        <p>Yes. You can use it for professional networking, client-facing business presentation, or even a more personal smart profile depending on how you set it up.</p>
+                        <summary>Can I update my profile later?</summary>
+                        <p>Yes. SmartCardLink is meant to evolve with your role, business details, contacts, links, and growth.</p>
                     </details>
 
                     <details class="faq-item animated-on-scroll liquid-glass-container">
-                        <summary>What happens if someone’s phone does not use NFC?</summary>
-                        <p>No problem. Every SmartCardLink setup also works through QR scan, so access remains quick and reliable.</p>
+                        <summary>What does Standard include?</summary>
+                        <p>Standard covers the premium live digital profile, QR + NFC sharing, contact actions, business details, social links, maps, and gold theme styling.</p>
                     </details>
 
                     <details class="faq-item animated-on-scroll liquid-glass-container">
-                        <summary>What makes PRO different from Standard?</summary>
-                        <p>PRO unlocks custom theme color, resume / CV section, secure resume access control, analytics, reminder tools, and a stronger premium presentation for employers and clients.</p>
+                        <summary>What does PRO add?</summary>
+                        <p>PRO adds stronger branded flexibility through theme color, resume / CV support, protected access, analytics, and reminder tools.</p>
                     </details>
 
                     <details class="faq-item animated-on-scroll liquid-glass-container">
-                        <summary>How does PRO resume security work?</summary>
-                        <p>PRO uses a 4-digit resume password to control who can view or download your resume section, giving you stronger control over professional sharing.</p>
+                        <summary>How does custom theme color work on PRO?</summary>
+                        <p>PRO is designed for a more premium custom look so your digital profile can feel more aligned with your personal or business identity.</p>
                     </details>
 
                     <details class="faq-item animated-on-scroll liquid-glass-container">
-                        <summary>What does analytics access help with?</summary>
-                        <p>Analytics helps you understand engagement with your profile, which is useful when your card is being used for job seeking, sales, branding, or client follow-up.</p>
+                        <summary>How does resume access protection work?</summary>
+                        <p>PRO allows better control around professional document access, helping serious viewers get the right information more intentionally.</p>
                     </details>
 
                     <details class="faq-item animated-on-scroll liquid-glass-container">
-                        <summary>What is the reminder feature on PRO?</summary>
-                        <p>The reminder tool helps keep important contacts and follow-up opportunities warm, adding more practical value beyond just sharing details.</p>
+                        <summary>How do analytics help?</summary>
+                        <p>Analytics gives you a better sense of profile engagement, which is useful for job seeking, sales, and client-facing business use.</p>
                     </details>
 
                     <details class="faq-item animated-on-scroll liquid-glass-container">
-                        <summary>Can PRO change theme color?</summary>
-                        <p>Yes. PRO supports luxury preset colors and custom theme color selection so your vCard can feel more branded and distinctive.</p>
+                        <summary>How do reminder tools help?</summary>
+                        <p>Reminders help you keep important people, follow-ups, and opportunities warm instead of losing momentum after first contact.</p>
                     </details>
 
                     <details class="faq-item animated-on-scroll liquid-glass-container">
-                        <summary>What link should I use to apply?</summary>
-                        <p>Use the official public form: https://smartcardlink-public.onrender.com/client-form.html</p>
+                        <summary>Can I add my business website and portfolio links?</summary>
+                        <p>Yes. SmartCardLink is built to support your strongest links so visitors can see more than just basic contact details.</p>
+                    </details>
+
+                    <details class="faq-item animated-on-scroll liquid-glass-container">
+                        <summary>Can maps and working hours be shown?</summary>
+                        <p>Yes. These details help customers and visitors act more easily, especially when location and timing matter.</p>
+                    </details>
+
+                    <details class="faq-item animated-on-scroll liquid-glass-container">
+                        <summary>Is booking supported?</summary>
+                        <p>Yes. The profile can be structured to support faster appointment or action-taking flow when required.</p>
+                    </details>
+
+                    <details class="faq-item animated-on-scroll liquid-glass-container">
+                        <summary>Can social links be added?</summary>
+                        <p>Yes. Social links are part of the broader digital profile experience and help round out your online presence.</p>
+                    </details>
+
+                    <details class="faq-item animated-on-scroll liquid-glass-container">
+                        <summary>Who is SmartCardLink best for?</summary>
+                        <p>It works well for professionals, founders, job seekers, business owners, creators, service providers, and anyone who wants a sharper first impression.</p>
+                    </details>
+
+                    <details class="faq-item animated-on-scroll liquid-glass-container">
+                        <summary>Why is it better than a paper card?</summary>
+                        <p>Because it is richer, easier to act on, less forgettable, and more useful long after the first meeting ends.</p>
                     </details>
                 </div>
             </div>
@@ -334,22 +574,35 @@
                 <h2 class="section-title">Connect with SmartCardLink</h2>
 
                 <div class="contact-grid">
-                    <a href="https://smartcardlink-public.onrender.com/client-form.html" target="_blank" rel="noopener noreferrer" class="contact-tag animated-on-scroll liquid-glass-container">
+                    <a
+                        href="https://smartcardlink-public.onrender.com/client-form.html"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="contact-tag animated-on-scroll liquid-glass-container"
+                    >
                         <i class="fas fa-file-signature"></i>
                         <h3>Client Form</h3>
                         <p>Start your SmartCardLink application using the official public form.</p>
                     </a>
 
-                    <a href="tel:+254702444552" class="contact-tag animated-on-scroll liquid-glass-container">
+                    <a
+                        href="tel:+254702444552"
+                        class="contact-tag animated-on-scroll liquid-glass-container contact-call"
+                    >
                         <i class="fas fa-phone"></i>
                         <h3>Direct Call</h3>
                         <p>Call SmartCardLink support directly on +254702444552.</p>
                     </a>
 
-                    <a href="https://wa.me/254702444552" target="_blank" rel="noopener noreferrer" class="contact-tag animated-on-scroll liquid-glass-container">
+                    <a
+                        href="https://wa.me/254702444552"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="contact-tag animated-on-scroll liquid-glass-container contact-whatsapp"
+                    >
                         <i class="fab fa-whatsapp"></i>
-                        <h3>WhatsApp Support</h3>
-                        <p>Chat directly on WhatsApp at +254702444552.</p>
+                        <h3>WhatsApp</h3>
+                        <p>Message SmartCardLink quickly on WhatsApp at +254702444552.</p>
                     </a>
                 </div>
 
@@ -362,7 +615,12 @@
         <i class="fas fa-chevron-up"></i>
     </a>
 
-    <a href="https://smartcardlink-public.onrender.com/client-form.html" target="_blank" rel="noopener noreferrer" class="mobile-sticky-cta magnetic-btn">
+    <a
+        href="https://smartcardlink-public.onrender.com/client-form.html"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mobile-sticky-cta magnetic-btn"
+    >
         <i class="fas fa-bolt"></i>
         <span>Apply Now</span>
     </a>
@@ -370,21 +628,31 @@
     <footer class="main-footer">
         <div class="footer-inner">
             <div class="footer-brand">
-                <img src="https://res.cloudinary.com/dicvwaud3/image/upload/v1754439242/vdkx5xtzizphhqcba4tt.png" alt="SmartCardLink Logo" class="footer-logo" />
+                <img
+                    src="https://res.cloudinary.com/dicvwaud3/image/upload/v1754439242/vdkx5xtzizphhqcba4tt.png"
+                    alt="SmartCardLink Logo"
+                    class="footer-logo"
+                />
                 <p class="footer-tagline">Premium NFC + QR digital vCard experience for modern networking in Kenya.</p>
             </div>
 
             <div class="footer-links-group">
                 <a href="#about">About</a>
                 <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#benefits">Benefits</a>
                 <a href="#pricing">Pricing</a>
                 <a href="#faq">FAQ</a>
-                <a href="https://smartcardlink-public.onrender.com/client-form.html" target="_blank" rel="noopener noreferrer">Client Form</a>
+                <a
+                    href="https://smartcardlink-public.onrender.com/client-form.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >Client Form</a>
             </div>
 
             <div class="footer-meta">
                 <p>SmartCardLink Kenya</p>
-                <p id="current-datetime">Loading date and time...</p>
+                <p id="current-datetime">Loading date and time.</p>
             </div>
         </div>
     </footer>
