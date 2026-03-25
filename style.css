@@ -995,14 +995,64 @@ main {
 
 .how-step-media {
     width: 100%;
-    height: 285px;
+    height: 520px;
     border-radius: 1rem;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(8, 8, 8, 0.82);
     margin-bottom: 1rem;
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.how-step-media video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    display: block;
+    filter: brightness(0.98) saturate(1.04);
+    cursor: pointer;
+}
+
+.video-expand-btn {
+    position: absolute;
+    top: 0.85rem;
+    right: 0.85rem;
+    z-index: 3;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+
+.video-expand-btn:hover {
+    transform: scale(1.08);
+    background: rgba(248, 209, 0, 0.18);
+    border-color: rgba(248, 209, 0, 0.45);
+}
+
+@media (max-width: 980px) {
+    .how-step-media {
+        height: 500px;
+    }
+}
+
+@media (max-width: 768px) {
+    .how-step-media {
+        height: 440px;
+    }
 }
 
 .how-step-media::after {
@@ -1022,13 +1072,66 @@ main {
     pointer-events: none;
 }
 
+.how-step-media {
+    width: 100%;
+    height: 520px;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(8, 8, 8, 0.82);
+    margin-bottom: 1rem;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .how-step-media video {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    object-position: center center;
     display: block;
-    filter: brightness(0.95) saturate(1.08);
+    filter: brightness(0.98) saturate(1.04);
     cursor: pointer;
+}
+
+.video-expand-btn {
+    position: absolute;
+    top: 0.85rem;
+    right: 0.85rem;
+    z-index: 3;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+
+.video-expand-btn:hover {
+    transform: scale(1.08);
+    background: rgba(248, 209, 0, 0.18);
+    border-color: rgba(248, 209, 0, 0.45);
+}
+
+@media (max-width: 980px) {
+    .how-step-media {
+        height: 500px;
+    }
+}
+
+@media (max-width: 768px) {
+    .how-step-media {
+        height: 440px;
+    }
 }
 
 .how-step-card h3 {
@@ -1463,4 +1566,107 @@ main {
     .how-it-works-grid-media {
         grid-template-columns: 1fr;
     }
+
+    .hero-content-wrapper.hero-content-wrapper-target {
+    width: min(1180px, 100%);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(420px, 560px) minmax(340px, 520px);
+    align-items: center;
+    justify-content: center;
+    gap: 2.6rem;
+    min-height: 430px;
+}
+
+.hero-media-column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-copy-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.hero-media-stage {
+    width: min(100%, 520px);
+    height: auto;
+    aspect-ratio: 1.82 / 1;
+}
+
+.hero-video-shell {
+    width: 100%;
+    height: 100%;
+    padding: 0.9rem;
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.42);
+}
+
+.hero-card-video {
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    object-fit: cover;
+    display: block;
+}
+
+.hero-main-title.hero-main-title-target {
+    margin: 0;
+    text-align: left;
+    font-size: clamp(3rem, 5vw, 4.9rem);
+    line-height: 0.9;
+    letter-spacing: -0.045em;
+}
+
+.hero-support-line.hero-support-line-target {
+    width: min(980px, 100%);
+    margin: 1.1rem 0 0;
+    text-align: left;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(255, 236, 156, 0.94);
+}
+
+.hero-cta-row.hero-cta-row-target {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 980px) {
+    .hero-content-wrapper.hero-content-wrapper-target {
+        grid-template-columns: 1fr;
+        gap: 1.8rem;
+        min-height: auto;
+    }
+
+    .hero-copy-column {
+        align-items: center;
+    }
+
+    .hero-main-title.hero-main-title-target {
+        text-align: center;
+        font-size: clamp(2.5rem, 10vw, 4rem);
+    }
+
+    .hero-support-line.hero-support-line-target {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-cta-row.hero-cta-row-target {
+        justify-content: center;
+    }
+
+    .hero-media-stage {
+        max-width: 420px;
+    }
+}
 }

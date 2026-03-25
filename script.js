@@ -16,6 +16,73 @@ document.addEventListener('DOMContentLoaded', () => {
     const bubbleLayer = document.getElementById('featureBubbleLayer');
     const typeTargets = document.querySelectorAll('.type-target');
     const toggleVideos = document.querySelectorAll('.tap-toggle-video');
+
+toggleVideos.forEach((video) => {
+    const mediaWrap = video.closest('.how-step-media');
+    const expandBtn = mediaWrap ? mediaWrap.querySelector('.video-expand-btn') : null;
+
+    const togglePlayback = async () => {
+        try {
+            if (video.paused) {
+                await video.play();
+                if (mediaWrap) mediaWrap.classList.remove('is-paused');
+            } else {
+                video.pause();
+                if (mediaWrap) mediaWrap.classList.add('is-paused');
+            }
+        } catch (error) {
+            console.error('Video toggle failed:', error);
+        }
+    };
+
+    const openFullscreen = async (event) => {
+        if (event) event.stopPropagation();
+
+        try {
+            if (video.requestFullscreen) {
+                await video.requestFullscreen();
+            } else if (video.webkitEnterFullscreen) {
+                video.webkitEnterFullscreen();
+            } else if (mediaWrap && mediaWrap.requestFullscreen) {
+                await mediaWrap.requestFullscreen();
+            }
+        } catch (error) {
+            console.error('Fullscreen failed:', error);
+        }
+    };
+
+    if (mediaWrap) {
+        mediaWrap.classList.remove('is-paused');
+        mediaWrap.setAttribute('role', 'button');
+        mediaWrap.setAttribute('tabindex', '0');
+        mediaWrap.setAttribute('aria-label', 'Toggle video playback');
+
+        mediaWrap.addEventListener('click', (event) => {
+            if (event.target.closest('.video-expand-btn')) return;
+            togglePlayback();
+        });
+
+        mediaWrap.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                togglePlayback();
+            }
+        });
+    }
+
+    if (expandBtn) {
+        expandBtn.addEventListener('click', openFullscreen);
+    }
+
+    video.addEventListener('pause', () => {
+        if (mediaWrap) mediaWrap.classList.add('is-paused');
+    });
+
+    video.addEventListener('play', () => {
+        if (mediaWrap) mediaWrap.classList.remove('is-paused');
+    });
+});
+
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     let bubbleInterval = null;
