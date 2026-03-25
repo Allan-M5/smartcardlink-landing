@@ -1,10 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const navMenu = document.querySelector('.header-nav');
-    const hamburgerBtn = document.querySelector('.hamburger-menu');
+    const navMenu = document.getElementById('header-nav');
+    const hamburgerBtn = document.getElementById('hamburger-menu');
     const header = document.getElementById('main-header');
     const progressBar = document.getElementById('scroll-progress');
     const datetimeElement = document.getElementById('current-datetime');
-    const aboutText = document.getElementById('about-text-content');
     const animatedElements = document.querySelectorAll('.animated-on-scroll');
     const backToTopBtn = document.getElementById('back-to-top');
     const scrollDownArrow = document.querySelector('.scroll-down-arrow');
@@ -16,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const blobs = document.querySelectorAll('.bg-blob');
     const bubbleLayer = document.getElementById('featureBubbleLayer');
     const typeTargets = document.querySelectorAll('.type-target');
+    const toggleVideos = document.querySelectorAll('.tap-toggle-video');
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     let bubbleInterval = null;
@@ -39,6 +39,19 @@ document.addEventListener('DOMContentLoaded', () => {
         'Reminder Tool'
     ];
 
+    const closeMobileMenu = () => {
+        if (!navMenu || !hamburgerBtn) return;
+
+        navMenu.classList.remove('active');
+        document.body.classList.remove('no-scroll');
+
+        const icon = hamburgerBtn.querySelector('i');
+        if (icon) {
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        }
+    };
+
     if (hamburgerBtn && navMenu) {
         hamburgerBtn.addEventListener('click', () => {
             navMenu.classList.toggle('active');
@@ -52,23 +65,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         navMenu.querySelectorAll('a').forEach((link) => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-                document.body.classList.remove('no-scroll');
-
-                const icon = hamburgerBtn.querySelector('i');
-                if (icon) {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                }
-            });
+            link.addEventListener('click', closeMobileMenu);
         });
     }
 
     if (datetimeElement) {
         const updateDateTime = () => {
             const now = new Date();
-            const options = {
+            datetimeElement.textContent = now.toLocaleString('en-US', {
                 weekday: 'long',
                 year: 'numeric',
                 month: 'long',
@@ -76,9 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit'
-            };
-
-            datetimeElement.textContent = now.toLocaleDateString('en-US', options);
+            });
         };
 
         updateDateTime();
@@ -93,14 +95,14 @@ document.addEventListener('DOMContentLoaded', () => {
         bubble.textContent = featurePool[Math.floor(Math.random() * featurePool.length)];
 
         const layerRect = bubbleLayer.getBoundingClientRect();
-        const x = Math.random() * Math.max(layerRect.width - 140, 40);
-        const y = Math.random() * Math.max(layerRect.height - 50, 40);
+        const maxX = Math.max(layerRect.width - 150, 30);
+        const maxY = Math.max(layerRect.height - 60, 30);
 
-        bubble.style.left = `${x}px`;
-        bubble.style.top = `${y}px`;
+        bubble.style.left = `${Math.random() * maxX}px`;
+        bubble.style.top = `${Math.random() * maxY}px`;
 
         bubbleLayer.appendChild(bubble);
-        bubble.addEventListener('animationend', () => bubble.remove());
+        bubble.addEventListener('animationend', () => bubble.remove(), { once: true });
     };
 
     if (bubbleLayer && !prefersReducedMotion) {
@@ -117,24 +119,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         typedElements.add(element);
 
+        const fullText = element.dataset.fullText || element.textContent.trim();
+        const speed = Number(element.dataset.typeSpeed || 14);
+
         if (prefersReducedMotion) {
-            const fullText = element.dataset.fullText || element.textContent.trim();
             element.textContent = fullText;
             return;
         }
-
-        const fullText = element.dataset.fullText || element.textContent.trim();
-        const speed = Number(element.dataset.typeSpeed || 14);
 
         element.textContent = '';
         let index = 0;
 
         const typeNext = () => {
-            if (index < fullText.length) {
-                element.textContent += fullText.charAt(index);
-                index += 1;
-                window.setTimeout(typeNext, speed);
-            }
+            if (index >= fullText.length) return;
+            element.textContent += fullText.charAt(index);
+            index += 1;
+            window.setTimeout(typeNext, speed);
         };
 
         typeNext();
@@ -147,11 +147,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 typeParagraph(entry.target);
                 observer.unobserve(entry.target);
             });
-        }, { threshold: 0.28 });
+        }, {
+            threshold: 0.28
+        });
 
         typeTargets.forEach((target) => typeObserver.observe(target));
-    } else if (aboutText) {
-        typeParagraph(aboutText);
     }
 
     const animateObserver = new IntersectionObserver((entries, observer) => {
@@ -160,39 +160,20 @@ document.addEventListener('DOMContentLoaded', () => {
             entry.target.classList.add('scroll-visible');
             observer.unobserve(entry.target);
         });
-    }, { threshold: 0.16 });
+    }, {
+        threshold: 0.16
+    });
 
     animatedElements.forEach((el) => animateObserver.observe(el));
 
-    const checkScrollButtons = () => {
-        const lastSection = document.querySelector('main > section:last-of-type');
-        if (!lastSection || !scrollDownArrow || !backToTopBtn) return;
-
-        const isAtLastSection = (window.innerHeight + window.scrollY) >= (lastSection.offsetTop + 40);
-
-        if (isAtLastSection) {
-            scrollDownArrow.style.opacity = '0';
-            scrollDownArrow.style.visibility = 'hidden';
-            backToTopBtn.style.opacity = '1';
-            backToTopBtn.style.visibility = 'visible';
-        } else {
-            scrollDownArrow.style.opacity = '1';
-            scrollDownArrow.style.visibility = 'visible';
-            backToTopBtn.style.opacity = '0';
-            backToTopBtn.style.visibility = 'hidden';
-        }
-
-        if (window.innerWidth > 768 && window.scrollY > 300) {
-            backToTopBtn.classList.add('visible');
-        } else if (window.innerWidth > 768 && !isAtLastSection) {
-            backToTopBtn.classList.remove('visible');
-        }
-    };
-
     const updateProgressBar = () => {
         if (!progressBar) return;
+
         const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0;
+        const progress = scrollableHeight > 0
+            ? (window.scrollY / scrollableHeight) * 100
+            : 0;
+
         progressBar.style.width = `${Math.min(Math.max(progress, 0), 100)}%`;
     };
 
@@ -202,6 +183,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const updateActiveNavLink = () => {
+        if (!sections.length) return;
+
         const headerOffset = header ? header.offsetHeight + 30 : 100;
         let currentSectionId = '';
 
@@ -214,31 +197,59 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        if (!currentSectionId && sections.length) {
+            currentSectionId = sections[0].id;
+        }
+
         navBtns.forEach((btn) => {
             const href = btn.getAttribute('href');
             btn.classList.toggle('active', href === `#${currentSectionId}`);
         });
     };
 
+    const checkScrollButtons = () => {
+        if (!scrollDownArrow || !backToTopBtn) return;
+
+        const lastSection = document.querySelector('main > section:last-of-type');
+        const nearBottom = lastSection
+            ? (window.innerHeight + window.scrollY) >= (lastSection.offsetTop + 80)
+            : false;
+
+        if (nearBottom) {
+            scrollDownArrow.style.opacity = '0';
+            scrollDownArrow.style.visibility = 'hidden';
+        } else {
+            scrollDownArrow.style.opacity = '1';
+            scrollDownArrow.style.visibility = 'visible';
+        }
+
+        if (window.scrollY > 320) {
+            backToTopBtn.classList.add('visible');
+        } else {
+            backToTopBtn.classList.remove('visible');
+        }
+    };
+
     const handleScrollState = () => {
-        checkScrollButtons();
         updateProgressBar();
         updateHeaderState();
         updateActiveNavLink();
+        checkScrollButtons();
     };
 
     window.addEventListener('scroll', handleScrollState, { passive: true });
+    window.addEventListener('resize', handleScrollState);
     handleScrollState();
 
     navLinks.forEach((anchor) => {
-        anchor.addEventListener('click', function (e) {
+        anchor.addEventListener('click', function (event) {
             const href = this.getAttribute('href');
             if (!href || !href.startsWith('#')) return;
 
             const target = document.querySelector(href);
             if (!target) return;
 
-            e.preventDefault();
+            event.preventDefault();
 
             const headerOffset = header ? header.offsetHeight : 0;
             const targetTop = target.getBoundingClientRect().top + window.pageYOffset - headerOffset + 1;
@@ -248,15 +259,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 behavior: prefersReducedMotion ? 'auto' : 'smooth'
             });
 
-            if (window.innerWidth <= 768 && navMenu && hamburgerBtn) {
-                navMenu.classList.remove('active');
-                document.body.classList.remove('no-scroll');
-
-                const icon = hamburgerBtn.querySelector('i');
-                if (icon) {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                }
+            if (window.innerWidth <= 768) {
+                closeMobileMenu();
             }
         });
     });
@@ -279,7 +283,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         button.addEventListener('mousedown', () => {
-            button.style.transform += ' scale(0.96)';
+            if (prefersReducedMotion) return;
+            button.style.transform += ' scale(0.97)';
         });
 
         button.addEventListener('mouseup', () => {
@@ -318,6 +323,48 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    toggleVideos.forEach((video) => {
+        const mediaWrap = video.closest('.how-step-media');
+
+        const togglePlayback = async () => {
+            try {
+                if (video.paused) {
+                    await video.play();
+                    if (mediaWrap) mediaWrap.classList.remove('is-paused');
+                } else {
+                    video.pause();
+                    if (mediaWrap) mediaWrap.classList.add('is-paused');
+                }
+            } catch (error) {
+                console.error('Video toggle failed:', error);
+            }
+        };
+
+        if (mediaWrap) {
+            mediaWrap.classList.remove('is-paused');
+            mediaWrap.setAttribute('role', 'button');
+            mediaWrap.setAttribute('tabindex', '0');
+            mediaWrap.setAttribute('aria-label', 'Toggle video playback');
+
+            mediaWrap.addEventListener('click', togglePlayback);
+
+            mediaWrap.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    togglePlayback();
+                }
+            });
+        }
+
+        video.addEventListener('pause', () => {
+            if (mediaWrap) mediaWrap.classList.add('is-paused');
+        });
+
+        video.addEventListener('play', () => {
+            if (mediaWrap) mediaWrap.classList.remove('is-paused');
+        });
+    });
 
     window.addEventListener('beforeunload', () => {
         if (bubbleInterval) clearInterval(bubbleInterval);
