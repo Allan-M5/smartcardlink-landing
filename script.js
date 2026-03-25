@@ -87,32 +87,70 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(updateDateTime, 1000);
     }
 
-    const createFeatureBubble = () => {
-        if (!bubbleLayer || prefersReducedMotion) return;
+    const getSafeBubblePosition = (layerRect) => {
+    const bubbleWidth = window.innerWidth <= 768 ? 110 : 140;
+    const bubbleHeight = window.innerWidth <= 768 ? 34 : 40;
+    const maxX = Math.max(layerRect.width - bubbleWidth, 20);
+    const maxY = Math.max(layerRect.height - bubbleHeight, 20);
 
-        const bubble = document.createElement('div');
-        bubble.className = `feature-bubble ${Math.random() > 0.5 ? 'gold' : 'blue'}`;
-        bubble.textContent = featurePool[Math.floor(Math.random() * featurePool.length)];
-
-        const layerRect = bubbleLayer.getBoundingClientRect();
-        const maxX = Math.max(layerRect.width - 150, 30);
-        const maxY = Math.max(layerRect.height - 60, 30);
-
-        bubble.style.left = `${Math.random() * maxX}px`;
-        bubble.style.top = `${Math.random() * maxY}px`;
-
-        bubbleLayer.appendChild(bubble);
-        bubble.addEventListener('animationend', () => bubble.remove(), { once: true });
+    const centerZone = {
+        left: layerRect.width * 0.23,
+        right: layerRect.width * 0.77,
+        top: layerRect.height * 0.2,
+        bottom: layerRect.height * 0.82
     };
 
-    if (bubbleLayer && !prefersReducedMotion) {
-        bubbleInterval = setInterval(() => {
-            const burstCount = Math.floor(Math.random() * 2) + 1;
-            for (let i = 0; i < burstCount; i += 1) {
-                setTimeout(createFeatureBubble, i * 180);
-            }
-        }, 900);
+    for (let i = 0; i < 20; i += 1) {
+        const x = Math.random() * maxX;
+        const y = Math.random() * maxY;
+
+        const overlapsCenter =
+            x + bubbleWidth > centerZone.left &&
+            x < centerZone.right &&
+            y + bubbleHeight > centerZone.top &&
+            y < centerZone.bottom;
+
+        if (!overlapsCenter) {
+            return { x, y };
+        }
     }
+
+    const edgeZones = [
+        { x: 8, y: 10 },
+        { x: maxX - 8, y: 14 },
+        { x: 10, y: maxY - 10 },
+        { x: maxX - 14, y: maxY - 12 }
+    ];
+
+    return edgeZones[Math.floor(Math.random() * edgeZones.length)];
+};
+
+const createFeatureBubble = () => {
+    if (!bubbleLayer || prefersReducedMotion) return;
+
+    const bubble = document.createElement('div');
+    bubble.className = `feature-bubble ${Math.random() > 0.5 ? 'gold' : 'blue'}`;
+    bubble.textContent = featurePool[Math.floor(Math.random() * featurePool.length)];
+
+    const layerRect = bubbleLayer.getBoundingClientRect();
+    const { x, y } = getSafeBubblePosition(layerRect);
+
+    bubble.style.left = `${x}px`;
+    bubble.style.top = `${y}px`;
+
+    bubbleLayer.appendChild(bubble);
+    bubble.addEventListener('animationend', () => bubble.remove(), { once: true });
+};
+
+if (bubbleLayer && !prefersReducedMotion) {
+    bubbleInterval = setInterval(() => {
+        const burstCount = window.innerWidth <= 768 ? 1 : (Math.floor(Math.random() * 2) + 1);
+
+        for (let i = 0; i < burstCount; i += 1) {
+            setTimeout(createFeatureBubble, i * 260);
+        }
+    }, window.innerWidth <= 768 ? 1250 : 980);
+}
 
     const typeParagraph = (element) => {
         if (!element || typedElements.has(element)) return;
@@ -324,47 +362,71 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    toggleVideos.forEach((video) => {
-        const mediaWrap = video.closest('.how-step-media');
+toggleVideos.forEach((video) => {
+    const mediaWrap = video.closest('.how-step-media');
+    const expandBtn = mediaWrap ? mediaWrap.querySelector('.video-expand-btn') : null;
 
-        const togglePlayback = async () => {
-            try {
-                if (video.paused) {
-                    await video.play();
-                    if (mediaWrap) mediaWrap.classList.remove('is-paused');
-                } else {
-                    video.pause();
-                    if (mediaWrap) mediaWrap.classList.add('is-paused');
-                }
-            } catch (error) {
-                console.error('Video toggle failed:', error);
+    const togglePlayback = async () => {
+        try {
+            if (video.paused) {
+                await video.play();
+                if (mediaWrap) mediaWrap.classList.remove('is-paused');
+            } else {
+                video.pause();
+                if (mediaWrap) mediaWrap.classList.add('is-paused');
             }
-        };
-
-        if (mediaWrap) {
-            mediaWrap.classList.remove('is-paused');
-            mediaWrap.setAttribute('role', 'button');
-            mediaWrap.setAttribute('tabindex', '0');
-            mediaWrap.setAttribute('aria-label', 'Toggle video playback');
-
-            mediaWrap.addEventListener('click', togglePlayback);
-
-            mediaWrap.addEventListener('keydown', (event) => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                    event.preventDefault();
-                    togglePlayback();
-                }
-            });
+        } catch (error) {
+            console.error('Video toggle failed:', error);
         }
+    };
 
-        video.addEventListener('pause', () => {
-            if (mediaWrap) mediaWrap.classList.add('is-paused');
+    const openFullscreen = async (event) => {
+        if (event) event.stopPropagation();
+
+        try {
+            if (video.requestFullscreen) {
+                await video.requestFullscreen();
+            } else if (video.webkitEnterFullscreen) {
+                video.webkitEnterFullscreen();
+            } else if (mediaWrap && mediaWrap.requestFullscreen) {
+                await mediaWrap.requestFullscreen();
+            }
+        } catch (error) {
+            console.error('Fullscreen failed:', error);
+        }
+    };
+
+    if (mediaWrap) {
+        mediaWrap.classList.remove('is-paused');
+        mediaWrap.setAttribute('role', 'button');
+        mediaWrap.setAttribute('tabindex', '0');
+        mediaWrap.setAttribute('aria-label', 'Toggle video playback');
+
+        mediaWrap.addEventListener('click', (event) => {
+            if (event.target.closest('.video-expand-btn')) return;
+            togglePlayback();
         });
 
-        video.addEventListener('play', () => {
-            if (mediaWrap) mediaWrap.classList.remove('is-paused');
+        mediaWrap.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                togglePlayback();
+            }
         });
+    }
+
+    if (expandBtn) {
+        expandBtn.addEventListener('click', openFullscreen);
+    }
+
+    video.addEventListener('pause', () => {
+        if (mediaWrap) mediaWrap.classList.add('is-paused');
     });
+
+    video.addEventListener('play', () => {
+        if (mediaWrap) mediaWrap.classList.remove('is-paused');
+    });
+});
 
     window.addEventListener('beforeunload', () => {
         if (bubbleInterval) clearInterval(bubbleInterval);
