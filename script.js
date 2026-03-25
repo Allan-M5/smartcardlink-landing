@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const header = document.getElementById('main-header');
     const progressBar = document.getElementById('scroll-progress');
     const datetimeElement = document.getElementById('current-datetime');
-    const welcomeTextElement = document.getElementById('hero-welcome-text');
     const vcard1Container = document.getElementById('vcard-1-container');
     const vcard2Container = document.getElementById('vcard-2-container');
     const vcard1Inner = document.getElementById('vcard-1-inner');
@@ -19,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const navBtns = document.querySelectorAll('.nav-btn');
     const sections = document.querySelectorAll('main section[id]');
     const blobs = document.querySelectorAll('.bg-blob');
+    const bubbleLayer = document.getElementById('featureBubbleLayer');
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     let currentVcardContainer = vcard1Container;
@@ -26,6 +26,26 @@ document.addEventListener('DOMContentLoaded', () => {
     let nextVcardContainer = vcard2Container;
     let nextVcardInner = vcard2Inner;
     let vcardTimeout = null;
+    let bubbleInterval = null;
+    let typingStarted = false;
+
+    const featurePool = [
+        'Save Contact',
+        'QR Access',
+        'NFC Tap',
+        'WhatsApp',
+        'Call Now',
+        'Email',
+        'Book Appointment',
+        'Portfolio URL',
+        'Business Website',
+        'Google Maps',
+        'Working Hours',
+        'Resume Access',
+        'Analytics',
+        'Theme Color',
+        'Reminder Tool'
+    ];
 
     if (hamburgerBtn && navMenu) {
         hamburgerBtn.addEventListener('click', () => {
@@ -70,43 +90,11 @@ document.addEventListener('DOMContentLoaded', () => {
         setInterval(updateDateTime, 1000);
     }
 
-    const textToType = "Welcome";
-    let charIndex = 0;
-    let isDeleting = false;
-    let typingSpeed = 150;
-
-    function typeWelcomeText() {
-        if (!welcomeTextElement || prefersReducedMotion) {
-            if (welcomeTextElement) welcomeTextElement.textContent = "Welcome";
-            return;
-        }
-
-        if (!isDeleting && charIndex < textToType.length) {
-            welcomeTextElement.textContent += textToType.charAt(charIndex);
-            charIndex++;
-            setTimeout(typeWelcomeText, typingSpeed);
-        } else if (!isDeleting && charIndex === textToType.length) {
-            isDeleting = true;
-            setTimeout(typeWelcomeText, 1800);
-        } else if (isDeleting && charIndex > 0) {
-            welcomeTextElement.textContent = textToType.substring(0, charIndex - 1);
-            charIndex--;
-            setTimeout(typeWelcomeText, typingSpeed / 2);
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            setTimeout(typeWelcomeText, 500);
-        }
-    }
-
-    if (welcomeTextElement) {
-        typeWelcomeText();
-    }
-
     function animateVcard() {
         if (!currentVcardContainer || !nextVcardContainer || !currentVcardInner || !nextVcardInner) return;
 
         currentVcardContainer.style.transition = 'none';
-        currentVcardContainer.style.transform = 'scale(0.12) translateY(0)';
+        currentVcardContainer.style.transform = 'scale(0.18) translateY(0)';
         currentVcardInner.style.transition = 'none';
         currentVcardInner.style.transform = 'rotateY(0deg)';
         currentVcardContainer.classList.add('active');
@@ -120,25 +108,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentVcardInner.style.transform = 'rotateY(180deg)';
 
                 setTimeout(() => {
-                    currentVcardInner.style.transition = 'transform 1.35s cubic-bezier(0.68, -0.55, 0.27, 1.35)';
-                    currentVcardInner.style.transform = 'rotateY(720deg)';
+                    currentVcardContainer.style.transition = 'transform 0.9s ease-in';
+                    currentVcardContainer.style.transform = 'scale(0.18)';
 
                     setTimeout(() => {
-                        currentVcardContainer.style.transition = 'transform 0.9s ease-in';
-                        currentVcardContainer.style.transform = 'scale(0.12)';
+                        currentVcardContainer.classList.remove('active');
+                        nextVcardContainer.classList.add('active');
 
-                        setTimeout(() => {
-                            currentVcardContainer.classList.remove('active');
-                            nextVcardContainer.classList.add('active');
+                        [currentVcardContainer, nextVcardContainer] = [nextVcardContainer, currentVcardContainer];
+                        [currentVcardInner, nextVcardInner] = [nextVcardInner, currentVcardInner];
 
-                            [currentVcardContainer, nextVcardContainer] = [nextVcardContainer, currentVcardContainer];
-                            [currentVcardInner, nextVcardInner] = [nextVcardInner, currentVcardInner];
-
-                            vcardTimeout = setTimeout(animateVcard, 500);
-                        }, 900);
-                    }, 1350);
-                }, 1000);
-            }, 1000);
+                        vcardTimeout = setTimeout(animateVcard, 500);
+                    }, 900);
+                }, 1100);
+            }, 900);
         }, 60);
     }
 
@@ -148,26 +131,72 @@ document.addEventListener('DOMContentLoaded', () => {
         vcard1Container.classList.add('active');
     }
 
+    function createFeatureBubble() {
+        if (!bubbleLayer || prefersReducedMotion) return;
+
+        const bubble = document.createElement('div');
+        bubble.className = `feature-bubble ${Math.random() > 0.5 ? 'gold' : 'blue'}`;
+        bubble.textContent = featurePool[Math.floor(Math.random() * featurePool.length)];
+
+        const layerRect = bubbleLayer.getBoundingClientRect();
+        const x = Math.random() * Math.max(layerRect.width - 120, 40);
+        const y = Math.random() * Math.max(layerRect.height - 40, 40);
+
+        bubble.style.left = `${x}px`;
+        bubble.style.top = `${y}px`;
+
+        bubbleLayer.appendChild(bubble);
+
+        bubble.addEventListener('animationend', () => {
+            bubble.remove();
+        });
+    }
+
+    if (bubbleLayer && !prefersReducedMotion) {
+        bubbleInterval = setInterval(() => {
+            const burstCount = Math.floor(Math.random() * 2) + 1;
+            for (let i = 0; i < burstCount; i++) {
+                setTimeout(createFeatureBubble, i * 180);
+            }
+        }, 850);
+    }
+
+    function typeParagraph(element, speed = 15) {
+        if (!element || typingStarted || prefersReducedMotion) return;
+        typingStarted = true;
+
+        const fullText = element.textContent.trim();
+        element.textContent = '';
+        let index = 0;
+
+        function typeNext() {
+            if (index < fullText.length) {
+                element.textContent += fullText.charAt(index);
+                index += 1;
+                setTimeout(typeNext, speed);
+            }
+        }
+
+        typeNext();
+    }
+
     if (aboutText) {
         const aboutObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('animate');
+                    typeParagraph(entry.target, 12);
                     observer.unobserve(entry.target);
                 }
             });
         }, {
-            root: null,
-            rootMargin: '0px',
             threshold: 0.35
         });
         aboutObserver.observe(aboutText);
     }
 
     const animateObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach((entry, index) => {
+        entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.transitionDelay = `${Math.min(index * 0.06, 0.24)}s`;
                 entry.target.classList.add('scroll-visible');
                 observer.unobserve(entry.target);
             }
@@ -333,5 +362,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('beforeunload', () => {
         if (vcardTimeout) clearTimeout(vcardTimeout);
+        if (bubbleInterval) clearInterval(bubbleInterval);
     });
 });
