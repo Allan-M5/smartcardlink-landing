@@ -45,6 +45,24 @@
         justify-content: center !important;
     }
 
+    #hero .hero-smart-card-poster {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    display: block !important;
+    z-index: 1 !important;
+    opacity: 1 !important;
+    transition: opacity 0.28s ease !important;
+    pointer-events: none !important;
+}
+
+#hero .hero-smart-card-media-shell.is-video-ready .hero-smart-card-poster {
+    opacity: 0 !important;
+}
+
     #hero .hero-top-badge-wrap {
         width: 100%;
         display: flex !important;
@@ -268,11 +286,35 @@
 </style>
 
 </head>
+
+<script>
+window.addEventListener("load", function () {
+    const bgVideo = document.getElementById("bg-video");
+    if (!bgVideo) return;
+
+    const startBgVideo = () => {
+        if (bgVideo.dataset.started === "true") return;
+        bgVideo.dataset.started = "true";
+        bgVideo.autoplay = true;
+        const playPromise = bgVideo.play();
+        if (playPromise && typeof playPromise.catch === "function") {
+            playPromise.catch(() => {});
+        }
+    };
+
+    if ("requestIdleCallback" in window) {
+        requestIdleCallback(startBgVideo, { timeout: 2000 });
+    } else {
+        setTimeout(startBgVideo, 1200);
+    }
+});
+</script>
+
 <body>
     <div class="page-noise"></div>
     <div class="scroll-progress" id="scroll-progress"></div>
 
-    <video autoplay muted loop playsinline id="bg-video">
+    <video muted loop playsinline preload="none" id="bg-video">
         <source
             src="https://res.cloudinary.com/dicvwaud3/video/upload/v1754439276/oyvgam7oizwizgwxaxge.mp4"
             type="video/mp4"
@@ -316,39 +358,47 @@
         </div>
     </div>
 
-    <div class="hero-row hero-row-target">
-        <div class="hero-card-side">
-            <div class="hero-smart-card-frame">
-                <div class="hero-smart-card-media-shell">
-<video
-    class="hero-smart-card-video"
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="auto"
-    poster="https://res.cloudinary.com/dicvwaud3/video/upload/so_0/q_auto,f_jpg/v1774432067/q5huzhgu0myu0tcjm6t3.jpg"
-    onloadeddata="this.closest('.hero-smart-card-media-shell')?.classList.add('is-video-ready');"
->
-    <source
-        src="https://res.cloudinary.com/dicvwaud3/video/upload/v1774432067/q5huzhgu0myu0tcjm6t3.mp4"
-        type="video/mp4"
-    />
-                    </video>
-                </div>
+<div class="hero-row hero-row-target">
+    <div class="hero-card-side">
+        <div class="hero-smart-card-frame">
+            <div class="hero-smart-card-media-shell">
+                <img
+                    class="hero-smart-card-poster"
+                    src="https://res.cloudinary.com/dicvwaud3/video/upload/so_0/q_auto,f_jpg/v1774432067/q5huzhgu0myu0tcjm6t3.jpg"
+                    alt="SmartCardLink preview"
+                    fetchpriority="high"
+                    decoding="async"
+                />
+
+                <video
+                    class="hero-smart-card-video"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    preload="auto"
+                    poster="https://res.cloudinary.com/dicvwaud3/video/upload/so_0/q_auto,f_jpg/v1774432067/q5huzhgu0myu0tcjm6t3.jpg"
+                    onloadeddata="this.closest('.hero-smart-card-media-shell')?.classList.add('is-video-ready');"
+                >
+                    <source
+                        src="https://res.cloudinary.com/dicvwaud3/video/upload/v1774432067/q5huzhgu0myu0tcjm6t3.mp4"
+                        type="video/mp4"
+                    />
+                </video>
             </div>
         </div>
-
-        <div class="hero-text-side">
-            <h1 class="hero-main-title hero-main-title-target">
-                <span class="hero-line hero-line-1"><span class="hero-word hero-word-orange">Tap</span></span>
-                <span class="hero-line hero-line-2"><span class="hero-word hero-word-white">Scan QR.</span></span>
-                <span class="hero-line hero-line-3"><span class="hero-word hero-word-gold">Instantly Share</span></span>
-                <span class="hero-line hero-line-4"><span class="hero-word hero-word-white">Your Digital</span></span>
-                <span class="hero-line hero-line-5"><span class="hero-word hero-word-white">Identity.</span></span>
-            </h1>
-        </div>
     </div>
+
+    <div class="hero-text-side">
+        <h1 class="hero-main-title hero-main-title-target">
+            <span class="hero-line hero-line-1"><span class="hero-word hero-word-orange">Tap</span></span>
+            <span class="hero-line hero-line-2"><span class="hero-word hero-word-white">Scan QR.</span></span>
+            <span class="hero-line hero-line-3"><span class="hero-word hero-word-gold">Instantly Share</span></span>
+            <span class="hero-line hero-line-4"><span class="hero-word hero-word-white">Your Digital</span></span>
+            <span class="hero-line hero-line-5"><span class="hero-word hero-word-white">Identity.</span></span>
+        </h1>
+    </div>
+</div>
 
     <p class="hero-support-line hero-support-line-target hero-support-line-center">
         A premium smart card and live digital profile built to make every introduction faster, sharper, and more valuable.

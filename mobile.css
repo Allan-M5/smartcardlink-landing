@@ -43,51 +43,50 @@
         height: 2.4rem;
     }
 
-    /* hero media: instant poster first, video fades in when ready */
-    .hero-smart-card-media-shell {
-        width: 100%;
-        aspect-ratio: 85.6 / 53.98;
-        position: relative;
-        overflow: hidden;
-        border-radius: 12px;
-        background:
-            url("https://res.cloudinary.com/dicvwaud3/video/upload/so_0/q_auto,f_jpg/v1774432067/q5huzhgu0myu0tcjm6t3.jpg")
-            center center / cover no-repeat;
-    }
+/* hero media: real poster image first, video fades in when ready */
+.hero-smart-card-media-shell {
+    width: 100%;
+    aspect-ratio: 85.6 / 53.98;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #0f0f0f;
+}
 
-    .hero-smart-card-media-shell::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background:
-            url("https://res.cloudinary.com/dicvwaud3/video/upload/so_0/q_auto,f_jpg/v1774432067/q5huzhgu0myu0tcjm6t3.jpg")
-            center center / cover no-repeat;
-        opacity: 1;
-        transition: opacity 0.28s ease;
-        z-index: 1;
-        pointer-events: none;
-    }
+.hero-smart-card-poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    z-index: 1;
+    opacity: 1;
+    transition: opacity 0.28s ease;
+    pointer-events: none;
+}
 
-    .hero-smart-card-media-shell.is-video-ready::before {
-        opacity: 0;
-    }
+.hero-smart-card-video {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    background: transparent;
+    opacity: 0;
+    transition: opacity 0.28s ease;
+}
 
-    .hero-smart-card-video {
-        width: 100%;
-        height: 100%;
-        display: block;
-        object-fit: cover;
-        object-position: center;
-        background: transparent;
-        position: relative;
-        z-index: 2;
-        opacity: 0;
-        transition: opacity 0.28s ease;
-    }
+.hero-smart-card-media-shell.is-video-ready .hero-smart-card-poster {
+    opacity: 0;
+}
 
-    .hero-smart-card-media-shell.is-video-ready .hero-smart-card-video {
-        opacity: 1;
-    }
+.hero-smart-card-media-shell.is-video-ready .hero-smart-card-video {
+    opacity: 1;
+}
 
     /* kill old hero structures */
     .hero-content-wrapper,
