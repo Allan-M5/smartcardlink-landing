@@ -473,6 +473,39 @@ main {
     align-items: stretch;
 }
 
+.pricing-global-note-card {
+    width: min(940px, 100%);
+    margin: 1rem auto 0;
+    padding: 1rem 1.2rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    text-align: center;
+    color: #fff7d0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.pricing-global-note-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary-color);
+    font-size: 1rem;
+    flex: 0 0 auto;
+}
+
+.pricing-global-note-text {
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.pricing-global-note-text strong {
+    color: var(--secondary-color);
+}
+
 .feature-card,
 .benefit-card,
 .pricing-card {
@@ -665,11 +698,21 @@ main {
         max-width: 860px;
     }
 
-    .pricing-grid {
+.pricing-grid {
         grid-template-columns: 1fr;
         max-width: 460px;
     }
 
+    .pricing-global-note-card {
+        width: 100%;
+        padding: 0.95rem 1rem;
+        gap: 0.6rem;
+    }
+
+    .pricing-global-note-text {
+        font-size: 0.92rem;
+        line-height: 1.5;
+    }
     .how-it-works-grid-media {
         grid-template-columns: 1fr;
         max-width: 520px;

@@ -34,261 +34,52 @@
     type="video/mp4"
 />
 
-<style id="desktop-hero-final-fix">
-@media (min-width: 769px) {
-    #hero.hero-section-clean {
-        min-height: calc(100vh - var(--header-height));
-        padding: 1.1rem 1rem 4rem !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-    }
-
-    #hero .hero-smart-card-poster {
-    position: absolute !important;
-    inset: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    object-position: center center !important;
-    display: block !important;
-    z-index: 1 !important;
-    opacity: 1 !important;
-    transition: opacity 0.28s ease !important;
-    pointer-events: none !important;
+<style id="hero-media-loading-fix">
+.hero-smart-card-media-shell {
+    position: relative;
+    overflow: hidden;
 }
 
-#hero .hero-smart-card-media-shell.is-video-ready .hero-smart-card-poster {
-    opacity: 0 !important;
+.hero-smart-card-poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+    z-index: 1;
+    opacity: 1;
+    transition: opacity 0.22s ease;
+    pointer-events: none;
 }
 
-    #hero .hero-top-badge-wrap {
-        width: 100%;
-        display: flex !important;
-        justify-content: center !important;
-        margin-bottom: 0.85rem !important;
-    }
-
-    #hero .hero-top-badge {
-        min-height: 36px !important;
-        padding: 0.45rem 0.95rem !important;
-        border-radius: 999px !important;
-        font-size: 0.62rem !important;
-        letter-spacing: 0.12em !important;
-        text-transform: uppercase !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-    }
-
-#hero .hero-row.hero-row-target {
-    width: min(1100px, 100%) !important;
-    margin: 0 auto !important;
-    display: grid !important;
-    grid-template-columns: 430px 440px !important;
-    column-gap: 3rem !important;
-    row-gap: 0 !important;
-    align-items: center !important;
-    justify-content: center !important;
+.hero-smart-card-video {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center center;
+    background: transparent;
+    opacity: 0;
+    transition: opacity 0.22s ease;
 }
 
-    #hero .hero-card-side {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-    }
-
-    #hero .hero-text-side {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        justify-content: center !important;
-        text-align: left !important;
-    }
-
-#hero .hero-smart-card-frame {
-    width: 430px !important;
-    min-width: 430px !important;
-    max-width: 430px !important;
-    aspect-ratio: 85.6 / 53.98 !important;
-    padding: 0 !important;
-    border-radius: 12px !important;
-    background: transparent !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    margin: 0 !important;
+.hero-smart-card-media-shell.is-video-ready .hero-smart-card-poster {
+    opacity: 0;
 }
 
-#hero .hero-smart-card-media-shell {
-    width: 100% !important;
-    height: 100% !important;
-    position: relative !important;
-    overflow: hidden !important;
-    border-radius: 12px !important;
-    background:
-        url("https://res.cloudinary.com/dicvwaud3/video/upload/so_0/q_auto,f_jpg/v1774432067/q5huzhgu0myu0tcjm6t3.jpg") center center / cover no-repeat,
-        linear-gradient(135deg, rgba(0, 0, 0, 0.97), rgba(18, 18, 18, 0.98)) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    box-shadow:
-        0 18px 40px rgba(0, 0, 0, 0.28),
-        0 0 0 1px rgba(255, 255, 255, 0.04) inset !important;
-}
-
-#hero .hero-smart-card-media-shell::before {
-    content: "" !important;
-    position: absolute !important;
-    inset: 0 !important;
-    z-index: 1 !important;
-    pointer-events: none !important;
-    background:
-        url("https://res.cloudinary.com/dicvwaud3/video/upload/so_0/q_auto,f_jpg/v1774432067/q5huzhgu0myu0tcjm6t3.jpg") center center / cover no-repeat !important;
-    opacity: 1 !important;
-    transition: opacity 0.28s ease !important;
-}
-
-#hero .hero-smart-card-media-shell::after {
-    content: "" !important;
-    position: absolute !important;
-    inset: 0 !important;
-    z-index: 2 !important;
-    pointer-events: none !important;
-    background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 28%),
-        linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.015)) !important;
-}
-
-#hero .hero-smart-card-media-shell.is-video-ready::before {
-    opacity: 0 !important;
-}
-
-#hero .hero-smart-card-video {
-    width: 100% !important;
-    height: 100% !important;
-    display: block !important;
-    object-fit: cover !important;
-    object-position: center center !important;
-    filter: brightness(0.98) saturate(1.04) !important;
-    position: relative !important;
-    z-index: 2 !important;
-    opacity: 0 !important;
-    transition: opacity 0.28s ease !important;
-}
-
-#hero .hero-smart-card-media-shell.is-video-ready .hero-smart-card-video {
-    opacity: 1 !important;
-}
-
-#hero .hero-main-title.hero-main-title-target {
-    margin: 0 !important;
-    max-width: 440px !important;
-    text-align: left !important;
-    font-size: 4.05rem !important;
-    line-height: 0.9 !important;
-    letter-spacing: -0.05em !important;
-}
-
-    #hero .hero-line {
-        display: block !important;
-        width: 100% !important;
-    }
-
-    #hero .hero-line-1 .hero-word {
-        color: #ff7f2a !important;
-    }
-
-    #hero .hero-line-2 .hero-word,
-    #hero .hero-line-4 .hero-word,
-    #hero .hero-line-5 .hero-word {
-        color: #ffffff !important;
-    }
-
-    #hero .hero-line-3 .hero-word {
-        color: var(--secondary-color) !important;
-    }
-
-#hero .hero-support-line.hero-support-line-target.hero-support-line-center {
-    width: min(1100px, 100%) !important;
-    max-width: 1100px !important;
-    margin: 0.95rem auto 0 !important;
-    text-align: center !important;
-    font-size: 1rem !important;
-    line-height: 1.7 !important;
-    color: rgba(255, 236, 156, 0.95) !important;
-}
-
-    #hero .hero-cta-row.hero-cta-row-target.hero-cta-row-center {
-        width: 100% !important;
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        gap: 1rem !important;
-        flex-wrap: wrap !important;
-        margin-top: 1.35rem !important;
-    }
-
-    #hero .hero-cta-row.hero-cta-row-target.hero-cta-row-center .cta-button {
-        width: auto !important;
-        min-width: 176px !important;
-        min-height: 46px !important;
-        padding: 0.82rem 1.2rem !important;
-        border-radius: 999px !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        gap: 0.55rem !important;
-        font-weight: 900 !important;
-        letter-spacing: 0.03em !important;
-        text-transform: uppercase !important;
-        transition:
-            transform 0.22s ease,
-            box-shadow 0.22s ease,
-            filter 0.22s ease,
-            background 0.22s ease,
-            border-color 0.22s ease !important;
-    }
-
-    #hero .hero-cta-row.hero-cta-row-target.hero-cta-row-center .cta-button:hover {
-        transform: translateY(-2px) scale(1.02) !important;
-    }
-
-    #hero .hero-cta-row.hero-cta-row-target.hero-cta-row-center .cta-button:active {
-        transform: translateY(0) scale(0.98) !important;
-    }
-
-    #hero .hero-cta-row.hero-cta-row-target.hero-cta-row-center .cta-button:first-child {
-        background: linear-gradient(135deg, #caa400, #f8d100) !important;
-        color: #111 !important;
-        border: 1px solid rgba(255, 255, 255, 0.16) !important;
-        box-shadow:
-            0 14px 24px rgba(0, 0, 0, 0.22),
-            0 0 18px rgba(248, 209, 0, 0.25) !important;
-    }
-
-    #hero .hero-cta-row.hero-cta-row-target.hero-cta-row-center .cta-button:last-child {
-        background: linear-gradient(135deg, rgba(44, 44, 44, 0.96), rgba(94, 94, 94, 0.92)) !important;
-        color: #fff !important;
-        border: 1px solid rgba(255, 255, 255, 0.12) !important;
-        box-shadow:
-            0 14px 24px rgba(0, 0, 0, 0.22),
-            0 0 0 1px rgba(255, 255, 255, 0.04) inset !important;
-    }
-
-    #hero .hero-card-glow,
-    #hero .feature-bubble-layer,
-    #hero .hero-media-stage,
-    #hero .hero-video-shell,
-    #hero .hero-card-video {
-        display: none !important;
-    }
+.hero-smart-card-media-shell.is-video-ready .hero-smart-card-video {
+    opacity: 1;
 }
 </style>
 
 </head>
 
 <script>
-window.addEventListener("DOMContentLoaded", function () {
+window.addEventListener("load", function () {
     const bgVideo = document.getElementById("bg-video");
     const heroShell = document.querySelector(".hero-smart-card-static-first");
     const heroVideo = heroShell?.querySelector(".hero-smart-card-video");
@@ -302,40 +93,32 @@ window.addEventListener("DOMContentLoaded", function () {
     };
 
     if (heroVideo && heroShell) {
-        if (heroVideo.dataset.started !== "true") {
-            heroVideo.dataset.started = "true";
-            heroVideo.autoplay = true;
-            heroVideo.loop = true;
-            heroVideo.muted = true;
-            heroVideo.playsInline = true;
-            heroVideo.preload = "auto";
-        }
-
         const revealHero = () => {
             heroShell.classList.add("is-video-ready");
         };
+
+        heroVideo.autoplay = true;
+        heroVideo.loop = true;
+        heroVideo.muted = true;
+        heroVideo.playsInline = true;
+        heroVideo.preload = "auto";
 
         if (heroVideo.readyState >= 2) {
             revealHero();
         } else {
             heroVideo.addEventListener("loadeddata", revealHero, { once: true });
             heroVideo.addEventListener("canplay", revealHero, { once: true });
+            heroVideo.addEventListener("playing", revealHero, { once: true });
         }
-
-        heroVideo.addEventListener("playing", revealHero, { once: true });
-        heroVideo.addEventListener("ended", () => {
-            heroVideo.currentTime = 0;
-            safePlay(heroVideo);
-        });
 
         safePlay(heroVideo);
     }
 
-    if (bgVideo && bgVideo.dataset.started !== "true") {
-        bgVideo.dataset.started = "true";
+    if (bgVideo) {
         bgVideo.autoplay = true;
         bgVideo.loop = true;
         bgVideo.muted = true;
+        bgVideo.playsInline = true;
         safePlay(bgVideo);
     }
 });
