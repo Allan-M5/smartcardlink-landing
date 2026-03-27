@@ -288,24 +288,55 @@
 </head>
 
 <script>
-window.addEventListener("load", function () {
+window.addEventListener("DOMContentLoaded", function () {
     const bgVideo = document.getElementById("bg-video");
-    if (!bgVideo) return;
+    const heroShell = document.querySelector(".hero-smart-card-static-first");
+    const heroVideo = heroShell?.querySelector(".hero-smart-card-video");
 
-    const startBgVideo = () => {
-        if (bgVideo.dataset.started === "true") return;
-        bgVideo.dataset.started = "true";
-        bgVideo.autoplay = true;
-        const playPromise = bgVideo.play();
+    const safePlay = (video) => {
+        if (!video) return;
+        const playPromise = video.play();
         if (playPromise && typeof playPromise.catch === "function") {
             playPromise.catch(() => {});
         }
     };
 
-    if ("requestIdleCallback" in window) {
-        requestIdleCallback(startBgVideo, { timeout: 2000 });
-    } else {
-        setTimeout(startBgVideo, 1200);
+    if (heroVideo && heroShell) {
+        if (heroVideo.dataset.started !== "true") {
+            heroVideo.dataset.started = "true";
+            heroVideo.autoplay = true;
+            heroVideo.loop = true;
+            heroVideo.muted = true;
+            heroVideo.playsInline = true;
+            heroVideo.preload = "auto";
+        }
+
+        const revealHero = () => {
+            heroShell.classList.add("is-video-ready");
+        };
+
+        if (heroVideo.readyState >= 2) {
+            revealHero();
+        } else {
+            heroVideo.addEventListener("loadeddata", revealHero, { once: true });
+            heroVideo.addEventListener("canplay", revealHero, { once: true });
+        }
+
+        heroVideo.addEventListener("playing", revealHero, { once: true });
+        heroVideo.addEventListener("ended", () => {
+            heroVideo.currentTime = 0;
+            safePlay(heroVideo);
+        });
+
+        safePlay(heroVideo);
+    }
+
+    if (bgVideo && bgVideo.dataset.started !== "true") {
+        bgVideo.dataset.started = "true";
+        bgVideo.autoplay = true;
+        bgVideo.loop = true;
+        bgVideo.muted = true;
+        safePlay(bgVideo);
     }
 });
 </script>
@@ -360,34 +391,32 @@ window.addEventListener("load", function () {
 
 <div class="hero-row hero-row-target">
     <div class="hero-card-side">
-        <div class="hero-smart-card-frame">
-            <div class="hero-smart-card-media-shell">
-                <img
-                    class="hero-smart-card-poster"
-                    src="https://res.cloudinary.com/dicvwaud3/video/upload/so_0/q_auto,f_jpg/v1774432067/q5huzhgu0myu0tcjm6t3.jpg"
-                    alt="SmartCardLink preview"
-                    fetchpriority="high"
-                    decoding="async"
-                />
+<div class="hero-smart-card-frame">
+    <div class="hero-smart-card-media-shell hero-smart-card-static-first">
+        <img
+            class="hero-smart-card-poster"
+            src="https://res.cloudinary.com/dicvwaud3/video/upload/so_0/q_auto,f_jpg/v1774432067/q5huzhgu0myu0tcjm6t3.jpg"
+            alt="SmartCardLink preview"
+            fetchpriority="high"
+            decoding="async"
+        />
 
-                <video
-                    class="hero-smart-card-video"
-                    autoplay
-                    muted
-                    loop
-                    playsinline
-                    preload="auto"
-                    poster="https://res.cloudinary.com/dicvwaud3/video/upload/so_0/q_auto,f_jpg/v1774432067/q5huzhgu0myu0tcjm6t3.jpg"
-                    onloadeddata="this.closest('.hero-smart-card-media-shell')?.classList.add('is-video-ready');"
-                >
-                    <source
-                        src="https://res.cloudinary.com/dicvwaud3/video/upload/v1774432067/q5huzhgu0myu0tcjm6t3.mp4"
-                        type="video/mp4"
-                    />
-                </video>
-            </div>
-        </div>
+<video
+    class="hero-smart-card-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    poster="https://res.cloudinary.com/dicvwaud3/video/upload/so_0/q_auto,f_jpg/v1774432067/q5huzhgu0myu0tcjm6t3.jpg"
+>
+    <source
+        src="https://res.cloudinary.com/dicvwaud3/video/upload/v1774432067/q5huzhgu0myu0tcjm6t3.mp4"
+        type="video/mp4"
+    />
+        </video>
     </div>
+</div>
 
     <div class="hero-text-side">
         <h1 class="hero-main-title hero-main-title-target">
@@ -728,6 +757,11 @@ window.addEventListener("load", function () {
                     </article>
                 </div>
             </div>
+
+<div class="pricing-global-note">
+    Yearly maintenance subscription for active upkeep: <strong>KSh 500 per year</strong>.
+</div>
+
         </section>
 
         <section class="content-section" id="faq">
@@ -759,6 +793,16 @@ window.addEventListener("load", function () {
                         <summary>Can I update my profile later?</summary>
                         <p>Yes. SmartCardLink is meant to evolve with your role, business details, contacts, links, and growth.</p>
                     </details>
+
+                    <details class="faq-item animated-on-scroll liquid-glass-container">
+    <summary>What if my card gets lost?</summary>
+    <p>No worries. We can replace your SmartCardLink card at only <strong>KSh 500</strong>, and we will reprogram it for you at no extra cost as part of our discounted support offer.</p>
+</details>
+
+<details class="faq-item animated-on-scroll liquid-glass-container">
+    <summary>Why do I have to pay 500 yearly?</summary>
+    <p>Its for your effortless upkeep , we handle all maintenance behind the scenes, empowering you to update your info freely at any moment. Plus, you'll stay ahead with continuous service enhancements across packages, a true value that suppoerts your connections effortlessly.</p>
+</details>
 
                     <details class="faq-item animated-on-scroll liquid-glass-container">
                         <summary>What does Standard include?</summary>
@@ -819,30 +863,54 @@ window.addEventListener("load", function () {
                         <summary>Why is it better than a paper card?</summary>
                         <p>Because one tap or QR scan opens your live profile with call, WhatsApp, email, save-contact, booking, maps, socials, CV access, and more instead of giving only static printed details.</p>
                     </details>
+
+
+
                 </div>
             </div>
         </section>
 
-        <section class="content-section section-gold-title" id="contact">
-            <div class="content-wrapper section-shell">
-                <h2 class="section-title">Connect with SmartCardLink</h2>
+<section class="content-section section-gold-title" id="contact">
+    <div class="content-wrapper section-shell">
+        <h2 class="section-title">Connect with SmartCardLink</h2>
 
-                <div class="contact-grid">
-                    <a
-                        href="https://wa.me/254702444552"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="contact-tag animated-on-scroll liquid-glass-container contact-whatsapp"
-                    >
-                        <i class="fab fa-whatsapp"></i>
-                        <h3>WhatsApp</h3>
-                        <p>Message SmartCardLink quickly on WhatsApp at +254702444552.</p>
-                    </a>
-                </div>
+        <div class="contact-grid">
+            <a
+                href="https://wa.me/254702444552"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="contact-tag animated-on-scroll liquid-glass-container contact-whatsapp"
+            >
+                <i class="fab fa-whatsapp"></i>
+                <h3>WhatsApp</h3>
+                <p>Message SmartCardLink quickly on WhatsApp at +254702444552.</p>
+            </a>
 
-                <div class="proudly-kenyan animated-on-scroll">Proudly Kenyan</div>
-            </div>
-        </section>
+            <a
+                href="https://smartcardlink-public.onrender.com/client-form.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="contact-tag animated-on-scroll liquid-glass-container contact-client-form"
+            >
+                <i class="fas fa-file-signature"></i>
+                <h3>Client Form</h3>
+                <p>Open the SmartCardLink client form and submit your details for setup quickly and smoothly.</p>
+            </a>
+
+            <a
+                href="tel:+254702444552"
+                class="contact-tag animated-on-scroll liquid-glass-container contact-call"
+            >
+                <i class="fas fa-phone-alt"></i>
+                <h3>Call</h3>
+                <p>Speak with SmartCardLink directly on +254702444552 for faster assistance.</p>
+            </a>
+        </div>
+
+        <div class="proudly-kenyan animated-on-scroll">Proudly Kenyan</div>
+    </div>
+</section>
+
     </main>
 
     <a href="#hero" id="back-to-top" class="scroll-to-top-arrow" aria-label="Back to top">
