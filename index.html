@@ -34,52 +34,10 @@
     type="video/mp4"
 />
 
-<style id="hero-media-loading-fix">
-.hero-smart-card-media-shell {
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-smart-card-poster {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-    display: block;
-    z-index: 1;
-    opacity: 1;
-    transition: opacity 0.22s ease;
-    pointer-events: none;
-}
-
-.hero-smart-card-video {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-    object-position: center center;
-    background: transparent;
-    opacity: 0;
-    transition: opacity 0.22s ease;
-}
-
-.hero-smart-card-media-shell.is-video-ready .hero-smart-card-poster {
-    opacity: 0;
-}
-
-.hero-smart-card-media-shell.is-video-ready .hero-smart-card-video {
-    opacity: 1;
-}
-</style>
-
 </head>
 
 <script>
-window.addEventListener("load", function () {
+window.addEventListener("DOMContentLoaded", function () {
     const bgVideo = document.getElementById("bg-video");
     const heroShell = document.querySelector(".hero-smart-card-static-first");
     const heroVideo = heroShell?.querySelector(".hero-smart-card-video");
@@ -93,32 +51,40 @@ window.addEventListener("load", function () {
     };
 
     if (heroVideo && heroShell) {
+        if (heroVideo.dataset.started !== "true") {
+            heroVideo.dataset.started = "true";
+            heroVideo.autoplay = true;
+            heroVideo.loop = true;
+            heroVideo.muted = true;
+            heroVideo.playsInline = true;
+            heroVideo.preload = "auto";
+        }
+
         const revealHero = () => {
             heroShell.classList.add("is-video-ready");
         };
-
-        heroVideo.autoplay = true;
-        heroVideo.loop = true;
-        heroVideo.muted = true;
-        heroVideo.playsInline = true;
-        heroVideo.preload = "auto";
 
         if (heroVideo.readyState >= 2) {
             revealHero();
         } else {
             heroVideo.addEventListener("loadeddata", revealHero, { once: true });
             heroVideo.addEventListener("canplay", revealHero, { once: true });
-            heroVideo.addEventListener("playing", revealHero, { once: true });
         }
+
+        heroVideo.addEventListener("playing", revealHero, { once: true });
+        heroVideo.addEventListener("ended", () => {
+            heroVideo.currentTime = 0;
+            safePlay(heroVideo);
+        });
 
         safePlay(heroVideo);
     }
 
-    if (bgVideo) {
+    if (bgVideo && bgVideo.dataset.started !== "true") {
+        bgVideo.dataset.started = "true";
         bgVideo.autoplay = true;
         bgVideo.loop = true;
         bgVideo.muted = true;
-        bgVideo.playsInline = true;
         safePlay(bgVideo);
     }
 });
@@ -541,8 +507,12 @@ window.addEventListener("load", function () {
                 </div>
             </div>
 
-<div class="pricing-global-note">
-    Yearly maintenance subscription for active upkeep: <strong>KSh 500 per year</strong>.
+<div class="content-wrapper">
+    <div class="pricing-global-note-card liquid-glass-container">
+        <span class="pricing-global-note-text">
+            Yearly maintenance subscription for active upkeep: <strong>KSh 500 per year</strong>.
+        </span>
+    </div>
 </div>
 
         </section>
