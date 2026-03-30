@@ -345,114 +345,50 @@
         gap: 1rem;
     }
 
-    /* =========================================================
-   FINAL HERO OVERRIDE - PHONE
-   This block must stay at the very bottom of mobile.css
-   ========================================================= */
-
-@media (max-width: 768px) {
-    .hero-section.hero-section-clean {
-        min-height: calc(100vh - var(--header-height)) !important;
-        padding: 0.95rem 1rem 4.25rem !important;
-        justify-content: flex-start !important;
+    .mobile-sticky-cta {
+        display: none !important;
     }
 
-    .hero-top-badge-wrap {
-        margin-bottom: 0.75rem !important;
+    .main-footer {
+        padding-bottom: 6rem;
     }
 
-    .hero-top-badge {
-        width: min(92vw, 320px) !important;
-        min-height: 42px !important;
-        padding: 0.48rem 0.8rem !important;
-        font-size: 0.62rem !important;
-        letter-spacing: 0.11em !important;
-        text-align: center !important;
-        border-radius: 999px !important;
+    .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
-    .hero-row.hero-row-target {
-        width: 100% !important;
-        display: grid !important;
-        grid-template-columns: 1fr !important;
-        row-gap: 1rem !important;
-        justify-items: center !important;
-        margin: 0 auto !important;
+    .footer-logo {
+        max-width: 150px;
+        margin-bottom: 1rem;
     }
 
-    .hero-card-side,
-    .hero-text-side {
-        width: 100% !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
+    .footer-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
     }
 
-    .hero-smart-card-frame {
-        width: min(320px, 92vw) !important;
-        min-width: 0 !important;
-        max-width: 320px !important;
-        aspect-ratio: 85.6 / 53.98 !important;
-        border-radius: 14px !important;
-        overflow: hidden !important;
+    .footer-nav a {
+        color: var(--text-light);
+        transition: color 0.3s ease;
     }
 
-    .hero-smart-card-media-shell {
-        width: 100% !important;
-        height: 100% !important;
-        border-radius: 14px !important;
-        overflow: hidden !important;
+    .footer-nav a:hover {
+        color: var(--secondary-color);
     }
 
-    .hero-smart-card-poster,
-    .hero-smart-card-video {
-        position: absolute !important;
-        inset: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
-        object-position: center center !important;
-        border-radius: 14px !important;
+    .footer-socials {
+        display: flex;
+        gap: 1rem;
     }
 
-    .hero-main-title.hero-main-title-target {
-        width: 100% !important;
-        max-width: 320px !important;
-        margin: 0 !important;
-        text-align: center !important;
-        font-size: clamp(2.55rem, 10.2vw, 4rem) !important;
-        line-height: 0.9 !important;
-        letter-spacing: -0.05em !important;
+    .footer-socials a {
+        color: var(--text-light);
+        transition: color 0.3s ease;
     }
 
-    .hero-support-line.hero-support-line-target.hero-support-line-center {
-        width: 100% !important;
-        max-width: 332px !important;
-        margin: 0.9rem auto 0 !important;
-        text-align: center !important;
-        font-size: 0.9rem !important;
-        line-height: 1.56 !important;
-        padding-inline: 0 !important;
+    .footer-socials a:hover {
+        color: var(--secondary-color);
     }
-
-    .hero-cta-row.hero-cta-row-target.hero-cta-row-center {
-        width: 100% !important;
-        max-width: 320px !important;
-        margin-top: 1.18rem !important;
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        flex-direction: row !important;
-    }
-
-    .hero-cta-row.hero-cta-row-target.hero-cta-row-center .cta-button,
-    .hero-pill-btn.hero-pill-btn-gold {
-        width: 100% !important;
-        min-height: 58px !important;
-        border-radius: 999px !important;
-        font-size: 0.98rem !important;
-        letter-spacing: 0.02em !important;
-    }
-}
-
 }
