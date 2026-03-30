@@ -317,18 +317,26 @@ main {
 /* HERO */
 .hero-section.hero-section-clean {
     min-height: calc(100vh - var(--header-height));
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+        "badge"
+        "row"
+        "support"
+        "cta";
+    justify-items: center;
+    align-content: center;
+    row-gap: 0.95rem;
     padding: 1.2rem 1rem 3.4rem;
 }
 
 .hero-top-badge-wrap {
+    grid-area: badge;
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-bottom: 1rem;
+    margin: 0;
 }
 
 .hero-top-badge {
@@ -349,13 +357,14 @@ main {
 }
 
 .hero-row.hero-row-target {
-    width: min(880px, 100%);
+    grid-area: row;
+    width: min(930px, calc(100vw - 64px));
     margin: 0 auto;
     display: grid;
-    grid-template-columns: minmax(0, 400px) minmax(0, 300px);
+    grid-template-columns: minmax(340px, 400px) minmax(260px, 320px);
     align-items: center;
     justify-content: center;
-    column-gap: 3.2rem;
+    column-gap: clamp(48px, 5vw, 76px);
 }
 
 .hero-card-side {
@@ -365,7 +374,7 @@ main {
 }
 
 .hero-smart-card-frame {
-    width: min(400px, 44vw);
+    width: min(400px, 100%);
     max-width: 400px;
     aspect-ratio: 85.6 / 53.98;
     border-radius: 14px;
@@ -436,13 +445,15 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+    width: 100%;
+    max-width: 320px;
 }
 
 .hero-main-title.hero-main-title-target {
     margin: 0;
     max-width: 300px;
-    font-size: 1.98rem;
-    line-height: 1.02;
+    font-size: clamp(2rem, 2.45vw, 2.45rem);
+    line-height: 1.01;
     letter-spacing: -0.025em;
     text-align: left;
 }
@@ -456,9 +467,10 @@ main {
 .hero-word-white { color: #ffffff; }
 
 .hero-support-line.hero-support-line-target.hero-support-line-center {
-    width: min(880px, 100%);
-    max-width: 880px;
-    margin: 1.15rem auto 0;
+    grid-area: support;
+    width: min(930px, calc(100vw - 64px));
+    max-width: 930px;
+    margin: 0;
     text-align: center;
     font-size: 0.88rem;
     line-height: 1.55;
@@ -466,10 +478,11 @@ main {
 }
 
 .hero-cta-row.hero-cta-row-target.hero-cta-row-center {
+    grid-area: cta;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 0.95rem;
+    margin: 0;
     width: 100%;
 }
 
@@ -1167,12 +1180,13 @@ main {
     .hero-section.hero-section-clean {
         padding: 2rem 1rem 4rem;
         justify-content: center;
+        row-gap: 1rem;
     }
 
     .hero-row.hero-row-target {
+        width: 100%;
         grid-template-columns: 1fr;
         gap: 1.9rem;
-        width: 100%;
     }
 
     .hero-card-side,
@@ -1191,15 +1205,16 @@ main {
     }
 
     .hero-main-title.hero-main-title-target {
+        max-width: 320px;
         text-align: center;
         font-size: 2.2rem;
-        max-width: 320px;
     }
 
     .hero-support-line.hero-support-line-target.hero-support-line-center {
-        margin-top: 1.2rem;
-        font-size: 0.95rem;
+        width: 100%;
         max-width: 420px;
+        margin: 0;
+        font-size: 0.95rem;
         padding: 0 1rem;
     }
 }
